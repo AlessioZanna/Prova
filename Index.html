@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Notes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Home Page -->
+    <div id="home-page" class="home-page">
+        <div class="header">
+            <h2>Music Notes</h2>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Cerca musica..." id="search-input">
+        </div>
+        <div class="contact-list" id="contact-list">
+            <!-- Lista di chat (creata dinamicamente) -->
+        </div>
+        <button class="create-chat-button" onclick="createNewChat()">+</button>
+    </div>
+
+    <!-- Chat Page -->
+    <div id="chat-page" class="chat-container" style="display: none;">
+        <div class="header chat-header">
+            <button onclick="goBack()" class="back-button">←</button>
+            <h2 id="chat-user"></h2>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <!-- I messaggi appariranno qui -->
+        </div>
+        <div class="message-input">
+            <input type="text" id="message" placeholder="Scrivi qui..." />
+            <button onclick="sendMessage()" class="send-button">📤</button>
+            <button onclick="sendAudio()" class="audio-button">🎤</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

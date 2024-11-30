@@ -1,0 +1,53 @@
+    margin-right: auto;
+    text-align: left;
+}
+
+.message.audio .msg {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+    max-width: 70%;
+    margin-right: auto;
+    text-align: left;
+    font-style: italic;
+}
+
+.message-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #1c1c1c;
+    border-top: 1px solid #333;
+}
+
+.message-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: #333;
+    color: white;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.message-input .send-button {
+    background-color: #ec404f;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.message-input .audio-button {
+    background-color: #007bff;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}

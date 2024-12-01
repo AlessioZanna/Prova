@@ -2,11 +2,13 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Music Notes</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007bff">
+    <link rel="icon" href="icon-192.png" sizes="192x192">
+    <link rel="icon" href="icon-512.png" sizes="512x512">
 </head>
 <body>
     <!-- Home Page -->
@@ -40,13 +42,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Registra il Service Worker per la PWA
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(() => console.log("Service Worker registrato con successo!"))
-                .catch(err => console.error("Errore nella registrazione del Service Worker:", err));
-        }
-    </script>
 </body>
 </html>

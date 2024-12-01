@@ -9,18 +9,21 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden; /* Impedisce lo scroll fuori dall'app */
 }
 
 /* Home Page */
 .home-page {
     position: relative;
-    width: 380px;
-    height: 600px;
+    width: 100%;
+    height: 100%;
+    max-width: 380px; /* Imposta una larghezza massima */
     background-color: #1c1c1c;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Evita lo scroll all'esterno */
 }
 
 .header {
@@ -51,7 +54,7 @@ body {
 
 .contact-list {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Rende scrollabile solo la lista di chat */
     padding: 10px 0;
     scrollbar-width: none;
     border-top: 1px solid #333;
@@ -128,13 +131,15 @@ body {
 
 /* Chat Page */
 .chat-container {
-    width: 380px;
-    height: 600px;
+    width: 100%;
+    height: 100%;
+    max-width: 380px; /* Imposta una larghezza massima */
     background-color: #1c1c1c;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Evita lo scroll all'esterno */
 }
 
 .chat-header {
@@ -156,7 +161,7 @@ body {
 
 .chat-box {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Rende scrollabile solo la chat */
     padding: 15px;
 }
 

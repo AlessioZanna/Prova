@@ -15,7 +15,7 @@ body {
 /* Home Page */
 .home-page {
     position: relative;
-    width: 100%;
+    width: 110%;
     height: 100%;
     max-width: 380px; /* Imposta una larghezza massima */
     background-color: #1c1c1c;
@@ -31,7 +31,7 @@ body {
     padding: 15px;
     font-size: 20px;
     color: #ffffff;
-    background-color: #121212;
+    background-color: #1c1c1c;
     border-bottom: 1px solid #333;
     border-radius: 15px 15px 0 0;
 }

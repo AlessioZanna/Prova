@@ -4,8 +4,8 @@
   "description": "Una PWA per creare note vocali e testi musicali.",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#333333",
-  "theme_color": "#333333",
+  "background_color": "#1c1c1c",
+  "theme_color": "#1c1c1c",
   "icons": [
     {
       "src": "icon-192.png",

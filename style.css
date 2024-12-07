@@ -16,7 +16,7 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    max-width: 390px; /* Imposta una larghezza massima */
+    max-width: 385px; /* Imposta una larghezza massima */
     background-color: #1c1c1c;
     display: flex;
     flex-direction: column;

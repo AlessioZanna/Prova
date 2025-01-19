@@ -1,242 +1,766 @@
 /* Stili generali */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #1c1c1c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden; /* Impedisce lo scroll fuori dall'app */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #1c1c1c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  /* Impedisce lo scroll fuori dall'app */
 }
 
-/* Home Page */
-.home-page {
+/*    App Container 
+  .app {
     position: relative;
-    width: 100%;
-    height: 100%;
-    max-width: 387px; /* Imposta una larghezza massima */
-    background-color: #1c1c1c;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    overflow: hidden; /* Evita lo scroll all'esterno */
+    height: 100vh;
+    overflow: hidden;
+  } */
+
+/* Homepage Styles */
+.home-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 387px;
+  /* Imposta una larghezza massima */
+  background-color: #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  /* Evita lo scroll all'esterno */
+  position: relative;
+  /* Assicurati che la home page sia sopra */
 }
+
+/*   h1 {
+    margin: 0;
+    font-size: 24px;
+  } */
 
 .header {
-    text-align: center;
-    padding: 15px;
-    font-size: 20px;
-    color: #ffffff;
-    background-color: #1c1c1c;
-    border-bottom: 1px solid #333;
-    border-radius: 15px 15px 0 0;
-    overflow: hidden; /* Impedisce lo scroll fuori dall'app */
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding: 15px;
+  font-size: 20px;
+  color: #EC404F;
+  background-color: #1c1c1c;
+  /*   border-bottom: 1px solid #333; */
+  border-radius: 15px 15px 0 0;
+  overflow: hidden;
+  /* Impedisce lo scroll fuori dall'app */
+  align-items: center;
+  /* Allinea gli elementi verticalmente */
+
 }
 
 .search-bar {
-    padding: 10px;
-    width: 340px;
-    background-color: #1c1c1c;
-    overflow: hidden; /* Impedisce lo scroll fuori dall'app */
+  padding: 10px;
+  width: 100%;
+  background-color: #1c1c1c;
+  overflow: hidden;
+  /* Impedisce lo scroll fuori dall'app */
 }
 
 .search-bar input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 20px;
-    border: none;
-    background-color: #333;
-    color: #ffffff;
-    font-size: 14px;
-    overflow: hidden; /* Impedisce lo scroll fuori dall'app */
+  width: 90%;
+  padding: 10px;
+  border-radius: 13px;
+  border: none;
+  background-color: #333;
+  color: #ffffff;
+  font-size: 14px;
+  overflow: hidden;
+  /* Impedisce lo scroll fuori dall'app */
 }
 
-.contact-list {
-    flex: 1;
-    overflow-y: auto; /* Rende scrollabile solo la lista di chat */
-    padding: 10px 0;
-    scrollbar-width: none;
-    border-top: 1px solid #333;
-    position: relative;
+
+
+
+.chat-square {
+  width: 50px;
+  /* Dimensione del quadrato */
+  height: 50px;
+  background-color: white;
+  /* Colore bianco */
+  display: inline-block;
+  margin-right: 10px;
+  /* Spazio tra il quadrato e il nome della chat */
+  border-radius: 10px;
 }
 
-.contact-list::-webkit-scrollbar {
-    display: none;
+.artist-name {
+  font-size: 14px;
+  color: gray;
+  /* Imposta il colore in grigio per l'artista */
 }
 
-.contact {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    position: relative;
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+  /* Rende scrollabile solo la lista di chat */
+  padding: 10px 0;
+  scrollbar-width: none;
+  position: relative;
+  /*   background-color: red; */
+  height: 555px;
 }
 
-.contact:hover {
-    background-color: #333;
+.chat-list::-webkit-scrollbar {
+  display: none;
 }
 
-.contact-info h3 {
-    font-size: 16px;
-    margin: 0;
-    color: #ffffff;
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: relative;
+  font-size: 16px;
+  margin: 0;
+  color: #ffffff;
+  border-top: 1px solid #333;
 }
 
-.contact-info p {
-    font-size: 12px;
-    color: #888;
-    margin: 0;
+.bordo {
+  content: '';
+  position: absolute;
+  top: 0;
+  /* Posiziona il bordo in alto */
+  left: 20px;
+  /* Sposta il bordo verso destra */
+  width: calc(100% - 20px);
+  /* Riduci la lunghezza del bordo */
+  height: 2px;
+  /* Spessore del bordo */
+  background-color: black;
+  /* Colore del bordo */
+}
+
+.span {
+  font-size: 18px;
+  margin: 0;
+  color: #ffffff;
 }
 
 .contact-delete {
-    position: absolute;
-    right: -50px;
-    top: 10px;
-    width: 40px;
-    height: 40px;
-    background-color: #ec404f;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: right 0.3s;
-    cursor: pointer;
-    font-size: 18px;
+  position: absolute;
+  right: -50px;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #ec404f;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: right 0.3s;
+  cursor: pointer;
+  font-size: 18px;
+  outline: none;
+  border: none;
 }
 
 .contact.swiped .contact-delete {
-    right: 15px;
+  right: 15px;
+  top: 10%;
 }
 
-.create-chat-button {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    background-color: #ec404f;
-    border: none;
-    color: white;
-    font-size: 24px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.add-button {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background-color: #ec404f;
+  border: none;
+  color: white;
+  font-size: 24px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: border-radius 0.2s ease, width 0.1s ease;
+  /* Transizioni per l'effetto */
 }
 
-/* Chat Page */
-.chat-container {
-    width: 100%;
-    height: 100%;
-    max-width: 380px; /* Imposta una larghezza massima */
-    background-color: #1c1c1c;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    overflow: hidden; /* Evita lo scroll all'esterno */
+/* Chat Page Styles */
+.chat-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 387px;
+  /* Imposta una larghezza massima */
+  background-color: #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  /* Evita lo scroll all'esterno */
+  position: relative;
+  /* Assicurati che la home page sia sopra */
 }
 
 .chat-header {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    background-color: #121212;
-    border-bottom: 1px solid #333;
-    border-radius: 15px 15px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 20px;
 }
 
-.chat-header h2 {
-    flex: 1;
-    text-align: center;
-    font-size: 18px;
-    margin: 0;
-    color: #ffffff;
+.chat-title {
+  color: #EC404F;
 }
 
-.chat-box {
-    flex: 1;
-    overflow-y: auto; /* Rende scrollabile solo la chat */
-    padding: 15px;
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
-.chat-box .message {
-    margin-bottom: 10px;
+.note-container {
+  margin-top: 20px;
+  overflow-y: auto;
+  height: 590px;
+  scrollbar-width: none;
 }
 
-.message.user .msg {
-    background-color: #ec404f;
-    color: white;
-    padding: 10px;
-    border-radius: 15px;
-    max-width: 70%;
-    margin-left: auto;
-    text-align: right;
+.note-block {
+  background-color: #333;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.message.bot .msg {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    border-radius: 15px;
-    max-width: 70%;
-    margin-right: auto;
-    text-align: left;
+.note-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 5px;
+  color: white;
 }
 
-.message.audio .msg {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border-radius: 15px;
-    max-width: 70%;
-    margin-right: auto;
-    text-align: left;
-    font-style: italic;
+.note-text {
+  font-size: 14px;
+  margin: 0;
+  color: white;
+  white-space: pre-wrap;
 }
 
-.message-input {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #1c1c1c;
-    border-top: 1px solid #333;
+/* Posizionamento della X nell'intestazione */
+.note-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.message-input input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 20px;
-    background-color: #333;
-    color: white;
-    font-size: 14px;
-    margin-right: 10px;
+.delete-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 18px;
+  cursor: pointer;
 }
 
-.message-input .send-button {
-    background-color: #ec404f;
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
+.delete-btn:hover {
+  color: red;
 }
 
-.message-input .audio-button {
-    background-color: #007bff;
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
+/* Nuove modifiche ai pulsanti */
+/* .backup-button,
+.restore-button,
+.delete-all-button {
+  background-color: #3498db;
+  color: white;
+  font-size: 14px;
+  border: none;
+  padding: 10px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+} */
+
+/* .backup-button:hover,
+.restore-button:hover,
+.delete-all-button:hover {
+  background-color: #2980b9;
 }
 
+
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------- MENU HOME PAGE -------------------------------------------------------------------------------- */
+
+
+/* Stili per la pagina destra (menu) */
+.right-page {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 190px;
+  width: 70%;
+  height: 100%;
+  background-color: #1d1d1d;
+  /* Colore di sfondo del menu */
+  color: white;
+  /* Colore del testo all'interno del menu */
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  transform: translateX(100%);
+  /* Inizialmente nascosta */
+  transition: transform 0.3s ease;
+  display: none;
+  /* Rende la pagina del menu invisibile all'inizio */
+  pointer-events: auto;
+  /* Permette l'interazione con il menu */
+  border-radius: 25px;
+  z-index: 2;
+}
+
+.header-menu{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-right: 85px;
+  padding-left: 15px;
+  position: relative;
+  top: 26px;
+}
+
+.close{
+  background: none;
+  border: none;
+  color: white;
+  position: relative;
+  top: 2px;
+  font-size: 25px;
+}
+
+#right-page-content {
+  padding-top: 20px;
+  padding-right: 70px;
+  text-align: -webkit-center;
+}
+
+.home-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.menu-overlay {
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.menu-content {
+  width: 50%;
+  max-width: 250px;
+  height: 100%;
+  background-color: #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+
+}
+
+.menu-content .close-menu {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.menu-content .menu-items {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: white;
+  font-size: 16px;
+  padding: 20px;
+}
+
+.menu-icon {
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  top: 3px;
+}
+
+/* Nascondi l'icona del menu quando il menu è aperto */
+.menu-icon.hidden {
+  display: none;
+}
+
+/* Overlay per rendere la home page meno visibile quando il menu è aperto */
+.home-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Sfondo semi-trasparente */
+  z-index: 1;
+  /* Deve essere sotto il menu */
+  display: none;
+  transition: transform 1s ease;
+}
+
+/* Aggiungi opacità alla home page */
+.home-page.blur {
+  opacity: 1;
+  /* Riduce l'opacità della Home Page */
+  pointer-events: none;
+  /* Impedisce interazioni con la home page mentre il menu è aperto */
+  transition: transform 1s ease;
+}
+
+.contact.dragging {
+  opacity: 0.5;
+  background-color: #f0f0f0;
+  cursor: move;
+}
+
+.calendar,
+.backup-button,
+.restore-button,
+.delete-all-button {
+  font-size: 17px;
+  margin: 0;
+  color: #ffffff;
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  margin-left: -5px;
+  font-weight: bold; /* Imposta il testo in grassetto */
+}
+
+.color{
+  display: flex;
+position: relative;
+justify-content: space-evenly;
+top: 25px;
+}
+
+.buttoncolor1{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #007BFE;
+  border: none;
+}
+
+.buttoncolor2{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #00ff9e;
+  border: none;
+}
+
+.buttoncolor3{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #EC404E;
+  border: none;
+}
+
+
+
+
+/* aggiunta */
+
+/* Aggiungi questa regola */
+.media-player {
+  position: fixed;
+  /* Posizione fissa */
+  bottom: 20px;
+  /* Imposta la distanza dal basso */
+  left: 20px;
+  /* Imposta la distanza dalla sinistra */
+  width: 345px;
+  height: 70px;
+  background-color: #EC404F;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 10;
+  /* Impedisce che venga coperto da altri elementi */
+}
+
+/* Modifica il margine da "bottom" come segue */
+
+
+.beat-selection {
+  /*
+  width: 50px;
+  height: 50px;
+  background-color: #ffffff;
+  */
+  margin: 10px;
+  font-size: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+}
+
+.beat-info {
+  flex-grow: 1;
+  margin-left: 10px;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.beat-title {
+  font-size: 14px;
+  margin: 0;
+  width: 140px;
+  /* Imposta una larghezza massima */
+  overflow: hidden;
+  /* Nasconde il testo in eccesso */
+  white-space: nowrap;
+  /* Impedisce il testo di andare a capo */
+  text-overflow: ellipsis;
+  /* Aggiunge i puntini di sospensione quando il testo è troncato */
+}
+
+
+.beat-time {
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.controls {
+  display: flex;
+  gap: 5px;
+}
+
+.control-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.progress-bar-container {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  right: 10px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2.5px;
+  overflow: hidden;
+  display: none;
+  /* Nasconde la barra finché non si seleziona un beat */
+  cursor: pointer;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: white;
+  width: 0;
+  transition: width 0.1s;
+  cursor: pointer;
+}
+
+
+/* fine aggiunta */
+
+
+
+
+
+
+
+
+
+/* -------------------- MENU CHAT PAGE -------------------------------------------------------------------------------- */
+
+.settings-page {
+  width: 100%;
+  height: 100%;
+  max-width: 380px;
+  background-color: #1c1c1c;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+/* .settings-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: #121212;
+  border-bottom: 1px solid #333;
+  border-radius: 15px 15px 0 0;
+}
+
+.settings-header h2 {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  margin: 0;
+  color: #ffffff;
+} */
+
+.setting-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 25px;
+}
+
+h2{
+  color: #ec404f;
+}
+
+.spazio{
+  opacity: 0;
+}
+
+.settings-content {
+  height: 700px;
+  padding-top: 20px;
+}
+
+.white-square {
+  background-color: #ffffff;
+  width: 320px;
+  height: 320px;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.buttons-container1 {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: space-evenly;
+  margin-top: 30px;
+}
+
+
+.settings-button {
+  background-color: #333;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+
+.settings-button:hover {
+  background-color: #ec404f;
+  transform: scale(1.05);
+}
+
+
+.settings-button:active {
+  transform: scale(0.95);
+}
+
+.check{
+  margin-top: 40px;
+}
+.custom-checkbox input {
+  display: none;
+}
+
+.custom-checkbox span {
+  background-color: #333;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  width: 95px;
+  text-align: center; 
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.custom-checkbox input:checked+span {
+  background-color: #ec404f;
+  color: white;
+}

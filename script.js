@@ -97,10 +97,11 @@ addChatButton.addEventListener("click", () => {
       <span>${chatName}</span>
       <span>${artistName}</span>
       </div>
-      <button onclick="deleteChat(this)">X</button>
+      
     `;
     chatItem.addEventListener("click", () => openChat(chatName));
     chatList.appendChild(chatItem);
+    /* <button onclick="deleteChat(this)">X</button> */
 
     // Crea la chat vuota e salva
     const newChat = {
@@ -306,10 +307,11 @@ function loadChats() {
         <span>${chat.name}</span>
         <div class="artist-name">${chat.artist}</div> <!-- Mostra l'artista -->
         </div>
-        <button class="contact-delete" onclick="deleteChat(this)">X</button>
+        
       `;
       chatItem.addEventListener("click", () => openChat(chat.name));
       chatList.appendChild(chatItem);
+      /* <button class="contact-delete" onclick="deleteChat(this)">X</button> */
     });
   };
 

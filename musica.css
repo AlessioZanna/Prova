@@ -1,0 +1,232 @@
+/* Stili generali */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1c1c1c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    /* Impedisce lo scroll fuori dall'app */
+}
+
+/* Homepage Styles */
+.musicPage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 387px;
+    /* Imposta una larghezza massima */
+    background-color: #1c1c1c;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    /* Evita lo scroll all'esterno */
+    position: relative;
+    /* Assicurati che la home page sia sopra */
+}
+
+.header {
+    padding: 15px;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #1c1c1c;
+    border-bottom: 1px solid #333;
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+    /* Impedisce lo scroll fuori dall'app */
+    align-items: center;
+    /* Centra verticalmente */
+    justify-content: space-between;
+    /* Spaziatura massima tra gli elementi */
+    display: flex;
+}
+
+h2 {
+    margin-left: 120px;
+}
+
+
+.search-bar {
+    padding: 10px;
+    width: 100%;
+    background-color: #1c1c1c;
+    overflow: hidden;
+    /* Impedisce lo scroll fuori dall'app */
+}
+
+.search-bar input {
+    width: 90%;
+    padding: 10px;
+    border-radius: 13px;
+    border: none;
+    background-color: #333;
+    color: #ffffff;
+    font-size: 14px;
+    overflow: hidden;
+    /* Impedisce lo scroll fuori dall'app */
+}
+
+/* 
+.mediaPlayer {
+    background-color: #EC404F;
+    height: 70px;
+    width: 345px;
+    position: absolute;
+    bottom: 400px;
+    right: 20px;
+    border-radius: 15px;
+} */
+
+
+
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    /* Gli elementi sono impilati verticalmente */
+    align-items: center;
+    /* Centra gli elementi orizzontalmente */
+    gap: 10px;
+    /* Spaziatura tra gli elementi */
+    height: 500px;
+}
+
+.music-list-container {
+    width: 345px;
+    background-color: #1a1a1a;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    height: 500px;
+}
+
+.music-list-container h2 {
+    margin: 0 0 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+#music-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#music-list li {
+    padding: 8px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.selected {
+    color: #EC404F; /* Colore rosso per il testo della canzone selezionata */
+}
+
+.media-player {
+    position: absolute;
+    /* Posizione fissa */
+    bottom: 20px;
+    /* Imposta la distanza dal basso */
+    left: 20px;
+    /* Imposta la distanza dalla sinistra */
+    width: 345px;
+    height: 70px;
+    background-color: #EC404F;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 10;
+    /* Impedisce che venga coperto da altri elementi */
+   /*  transition: border-radius 0.2s ease, width 0.1s ease; */
+   transition: left 0.1s ease, width 0.1s ease, border-radius 0.1s ease;
+    /* Transizioni per l'effetto */
+}
+
+
+.beat-selection {
+    /*
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    */
+    margin: 10px;
+    font-size: 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+}
+
+.beat-info {
+    flex-grow: 1;
+    margin-left: 10px;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.beat-title {
+    font-size: 14px;
+    margin: 0;
+    width: 140px;
+    /* Imposta una larghezza massima */
+    overflow: hidden;
+    /* Nasconde il testo in eccesso */
+    white-space: nowrap;
+    /* Impedisce il testo di andare a capo */
+    text-overflow: ellipsis;
+    /* Aggiunge i puntini di sospensione quando il testo è troncato */
+}
+
+.beat-time {
+    font-size: 12px;
+    margin: 0;
+    opacity: 0.8;
+}
+
+.controls {
+    display: flex;
+    gap: 5px;
+}
+
+.control-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.progress-bar-container {
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    right: 10px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2.5px;
+    overflow: hidden;
+    display: none;
+    /* Nasconde la barra finché non si seleziona un beat */
+    cursor: pointer;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: white;
+    width: 0;
+    transition: width 0.1s;
+    cursor: pointer;
+}
+

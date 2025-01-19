@@ -1,46 +1,177 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Music Notes</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icon-192.png" sizes="192x192">
-    <link rel="icon" href="icon-512.png" sizes="512x512">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Notes</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
-    <!-- Home Page -->
-    <div id="home-page" class="home-page">
-        <div class="header">
-            <h2>Music Notes</h2>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Cerca musica..." id="search-input">
-        </div>
-        <div class="contact-list" id="contact-list">
-            <!-- Lista di chat (creata dinamicamente) -->
-        </div>
-        <button class="create-chat-button" onclick="createNewChat()">+</button>
+
+  <!-- Homepage -->
+  <div class="home-page" id="home-page">
+
+    <div class="header">
+      <h2>Music Notes</h2>
+      <div id="menu-icon" class="menu-icon" onclick="openHomeMenu()"><i class="fa-solid fa-bars"></i></div>
     </div>
 
-    <!-- Chat Page -->
-    <div id="chat-page" class="chat-container" style="display: none;">
-        <div class="header chat-header">
-            <button onclick="goBack()" class="back-button">←</button>
-            <h2 id="chat-user"></h2>
-        </div>
-        <div class="chat-box" id="chat-box">
-            <!-- I messaggi appariranno qui -->
-        </div>
-        <div class="message-input">
-            <input type="text" id="message" placeholder="Scrivi qui..." />
-            <button onclick="sendMessage()" class="send-button">📤</button>
-            <button onclick="sendAudio()" class="audio-button">🎤</button>
-        </div>
+    <div class="search-bar">
+      <input type="text" class="search-bar1" placeholder="Cerca musica...">
     </div>
 
-    <script src="script.js"></script>
+
+    <div class="chat-list" id="chat-list"></div>
+
+    <button class="add-button" id="add-chat">
+      <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+    </button>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- -------------------- MENU HOME PAGE -------------------------------------------------------------------------------- -->
+
+  <!-- Menu che si aprirà a destra -->
+  <div id="right-page" class="right-page" style="display: none;">
+    <div class="header-menu">
+      <h2>Menu</h2>
+      <button class="close" onclick="closeHomeMenu()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="right-page-content">
+      <button class="calendar" id="calendar">HeatMap Calendar</button>
+      <button class="backup-button" id="backup-button">Backup</button>
+      <button class="restore-button" id="restore-button">Carica Backup</button>
+      <button class="delete-all-button" id="delete-all-button">Cancella Tutti i Dati</button>
+      <div class="color">
+        <button class="buttoncolor1" id="changeColorButton1"></button>
+        <button class="buttoncolor2" id="changeColorButton2"></button>
+        <button class="buttoncolor3" id="changeColorButton3"></button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Aggiungi un overlay che copre la home page quando il menu è aperto -->
+  <div id="home-overlay" class="home-overlay" style="display: none;" onclick="closeHomeMenu()"></div>
+
+
+  <!-- Chat Page -->
+  <div class="chat-page" id="chat-page">
+    <div class="chat-header">
+      <button class="back-button" id="back-button"><i class="fa-solid fa-angle-left"></i></button>
+      <h2 class="chat-title" id="chat-title">Chat Name</h2>
+      <div id="menu-icon" class="menu-icon" onclick="openChatMenu()">☰</div>
+    </div>
+    <div class="note-container" id="note-container"></div>
+
+
+
+
+    <!-- aggiunta -->
+
+    <div class="media-player">
+      <!--        <div class="beat-selection" onclick="document.getElementById('file-input').click()"></div>-->
+      <!-- <div class="beat-selection" onclick="document.getElementById('file-input').click()"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></div>
+               -->
+      <div class="beat-selection" id="beat-button" onclick="toggleAudioSelection()">
+        <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+      </div>
+
+
+      <input type="file" id="file-input" accept="audio/*" style="display: none;" onchange="loadAudio(event)">
+      <div class="beat-info">
+        <p class="beat-title">Scegli il beat</p>
+        <p class="beat-time" id="current-time">0:00</p>
+      </div>
+      <div class="controls">
+
+        <button class="control-btn" onclick="rewind()"><i class="fa-solid fa-rotate-left"
+            style="color: #ffffff;"></i></button>
+        <button class="control-btn" onclick="togglePlayPause()"><i class="fa-solid fa-play"
+            style="color: #ffffff;"></i></button>
+        <button class="control-btn" onclick="forward()"><i class="fa-solid fa-rotate-right"
+            style="color: #ffffff;"></i></button>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+
+    <audio id="audio-player"></audio>
+
+  </div>
+  <!-- fine aggiunta -->
+
+
+
+
+
+
+  <!-- -------------------- MENU CHAT PAGE -------------------------------------------------------------------------------- -->
+
+
+
+  <!-- Chat Menu -->
+  <div id="settings-page" class="settings-page" style="display: none;">
+    <div class="setting-header">
+      <button onclick="goBackFromSettings()" class="back-button"><i class="fa-solid fa-angle-left"></i></button>
+      <h2>Opzioni</h2>
+      <button class="spazio"></button>
+    </div>
+    <div class="settings-content">
+      <div class="white-square"></div>
+
+
+      <div class="buttons-container1">
+        <button class="settings-button" onclick="optionOne()">Opz1</button>
+        <button class="settings-button" onclick="optionTwo()">Opz2</button>
+        <button class="settings-button" onclick="optionThree()">Opz3</button>
+      </div>
+
+      <div class="check">
+        <label class="custom-checkbox">
+          <input type="checkbox">
+          <span>Testo</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox">
+          <span>Home Studio</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox">
+          <span>Mix & Master</span>
+        </label>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <script src="script.js"></script>
 </body>
+
 </html>

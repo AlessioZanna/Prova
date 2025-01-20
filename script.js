@@ -845,3 +845,12 @@ document.getElementById('changeColorButton3').addEventListener('click', () => {
   changeAppColors('rgb(0, 123, 255)', 'rgb(236, 64, 79)');
   changeAppColors('rgb(0, 255, 157)', 'rgb(236, 64, 79)');
 });
+
+import Hammer from 'hammerjs';
+
+const element = document.getElementById('yourElement'); // Elemento che vuoi tracciare
+const hammer = new Hammer(element);
+
+hammer.on('swipeleft', function() {
+  window.history.back(); // Torna indietro nella cronologia del browser
+});

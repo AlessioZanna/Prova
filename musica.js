@@ -294,12 +294,3 @@ function playNextTrack() {
   const selectedItem = musicList.querySelector(`li[data-index="${nextIndex}"]`);
   setSelectedTrack(selectedItem);
 }
-
-import Hammer from 'hammerjs';
-
-const element = document.getElementById('yourElement'); // Elemento che vuoi tracciare
-const hammer = new Hammer(element);
-
-hammer.on('swipeleft', function() {
-  window.history.back(); // Torna indietro nella cronologia del browser
-});

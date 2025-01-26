@@ -1,9 +1,10 @@
+
 /* Stili generali */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #1c1c1c;
+    background-color: #141414;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +20,7 @@ body {
     height: 100%;
     max-width: 387px;
     /* Imposta una larghezza massima */
-    background-color: #1c1c1c;
+    background-color: #141414;
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -32,28 +33,31 @@ body {
 .header {
     padding: 15px;
     font-size: 20px;
-    color: #ffffff;
-    background-color: #1c1c1c;
-    border-bottom: 1px solid #333;
+    color: #EC404F;
+    background-color: #141414;
+    /* border-bottom: 1px solid #333; */
     border-radius: 15px 15px 0 0;
     overflow: hidden;
+    position: relative;
     /* Impedisce lo scroll fuori dall'app */
-    align-items: center;
+    /* align-items: center; */
     /* Centra verticalmente */
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* Spaziatura massima tra gli elementi */
-    display: flex;
+    /* display: flex; */
+    
 }
 
 h2 {
-    margin-left: 120px;
+    /* margin-left: 120px; */
+    text-align: center;
 }
 
 
 .search-bar {
     padding: 10px;
     width: 100%;
-    background-color: #1c1c1c;
+    background-color: #141414;
     overflow: hidden;
     /* Impedisce lo scroll fuori dall'app */
 }
@@ -98,7 +102,7 @@ h2 {
 
 .music-list-container {
     width: 345px;
-    background-color: #1a1a1a;
+/*     background-color: #1a1a1a; */
     color: white;
     border-radius: 10px;
     padding: 10px;
@@ -136,7 +140,7 @@ h2 {
 .media-player {
     position: absolute;
     /* Posizione fissa */
-    bottom: 20px;
+    bottom: 40px;
     /* Imposta la distanza dal basso */
     left: 20px;
     /* Imposta la distanza dalla sinistra */
@@ -197,15 +201,17 @@ h2 {
 
 .controls {
     display: flex;
-    gap: 5px;
+    /* gap: 5px; */
 }
 
 .control-btn {
     background-color: transparent;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
+    padding-right: 10px;
+    padding-left: 15px;
 }
 
 .progress-bar-container {
@@ -229,4 +235,3 @@ h2 {
     transition: width 0.1s;
     cursor: pointer;
 }
-

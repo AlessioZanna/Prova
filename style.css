@@ -3,7 +3,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #1c1c1c;
+  background-color: #141414;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,34 +12,18 @@ body {
   /* Impedisce lo scroll fuori dall'app */
 }
 
-/*    App Container 
-  .app {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-  } */
-
-/* Homepage Styles */
 .home-page {
   position: relative;
   width: 100%;
   height: 100%;
-  max-width: 387px;
+  max-width: 390px;
   /* Imposta una larghezza massima */
-  background-color: #1c1c1c;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   /* Evita lo scroll all'esterno */
-  position: relative;
-  /* Assicurati che la home page sia sopra */
 }
-
-/*   h1 {
-    margin: 0;
-    font-size: 24px;
-  } */
 
 .header {
   display: flex;
@@ -48,21 +32,19 @@ body {
   padding: 15px;
   font-size: 20px;
   color: #EC404F;
-  background-color: #1c1c1c;
   /*   border-bottom: 1px solid #333; */
   border-radius: 15px 15px 0 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* Impedisce lo scroll fuori dall'app */
   align-items: center;
   /* Allinea gli elementi verticalmente */
-
+  height: 50px;
 }
 
 .search-bar {
   padding: 10px;
   width: 100%;
-  background-color: #1c1c1c;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* Impedisce lo scroll fuori dall'app */
 }
 
@@ -74,12 +56,19 @@ body {
   background-color: #333;
   color: #ffffff;
   font-size: 14px;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* Impedisce lo scroll fuori dall'app */
 }
 
-
-
+.canc{
+  position: absolute;
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    right: 15px;
+    top: 25px;
+}
 
 .chat-square {
   width: 50px;
@@ -104,9 +93,9 @@ body {
   overflow-y: auto;
   /* Rende scrollabile solo la lista di chat */
   padding: 10px 0;
+  padding-top: 40px;
   scrollbar-width: none;
   position: relative;
-  /*   background-color: red; */
   height: 555px;
 }
 
@@ -124,23 +113,9 @@ body {
   font-size: 16px;
   margin: 0;
   color: #ffffff;
-  border-top: 1px solid #333;
 }
 
-.bordo {
-  content: '';
-  position: absolute;
-  top: 0;
-  /* Posiziona il bordo in alto */
-  left: 20px;
-  /* Sposta il bordo verso destra */
-  width: calc(100% - 20px);
-  /* Riduci la lunghezza del bordo */
-  height: 2px;
-  /* Spessore del bordo */
-  background-color: black;
-  /* Colore del bordo */
-}
+
 
 .span {
   font-size: 18px;
@@ -173,35 +148,10 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .add-button {
   position: absolute;
   right: 20px;
-  bottom: 20px;
+  bottom: 40px;
   background-color: #ec404f;
   border: none;
   color: white;
@@ -225,7 +175,6 @@ body {
   height: 100%;
   max-width: 387px;
   /* Imposta una larghezza massima */
-  background-color: #1c1c1c;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -239,35 +188,49 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 15px;
+  padding-left: 20px;
   padding-right: 20px;
 }
 
 .chat-title {
   color: #EC404F;
+  padding-right: 15px;
 }
 
 .back-button {
   background: none;
   border: none;
   color: white;
-  font-size: 20px;
-  margin-right: 10px;
+  font-size: 22px;
+  padding-left: 0px;
   cursor: pointer;
 }
 
+.chat-menu {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  padding-right: 0px;
+}
+
 .note-container {
-  margin-top: 20px;
+  padding-top: 20px;
   overflow-y: auto;
   height: 590px;
   scrollbar-width: none;
 }
 
 .note-block {
-  background-color: #333;
-  margin: 10px 0;
+  margin: 10px 45px;
   padding: 10px;
   border-radius: 5px;
+  background-color: red;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .note-title {
@@ -284,6 +247,63 @@ body {
   white-space: pre-wrap;
 }
 
+.contain{
+  background-color: blue;
+}
+
+/* Stile per il pulsante di trascinamento */
+.drag-handle {
+  margin-left: -54px;
+  justify-content: center;
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+}
+
+.contai{
+  border-radius: 15%;
+  width: 20px;
+  height: 7px;
+  background-color: white;
+}
+
+/* Stile per il pulsante di rec */
+.rec {
+  right: 0px;
+  justify-content: center;
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+}
+
+.contai2{
+  border: 7px solid white;
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px rgba (0, 0, 0, 0.2);
+  width: 8px;
+  height: 8px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  color: transparent;
+}
+
+.rec.triangle {
+  width: 5px;
+  height: 5px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 15px solid white;
+  border-radius: 0;
+  background-color: transparent;
+  color: transparent;
+  margin-top: 15px;
+  transform: rotateZ(90deg);
+}
+
 /* Posizionamento della X nell'intestazione */
 .note-title-wrapper {
   display: flex;
@@ -294,48 +314,13 @@ body {
 .delete-btn {
   background: none;
   border: none;
-  color: #ccc;
-  font-size: 18px;
+  color: #ffffff;
+  font-size: 15px;
   cursor: pointer;
+  position: relative;
+  top: -11px;
+  right: -24px;
 }
-
-.delete-btn:hover {
-  color: red;
-}
-
-/* Nuove modifiche ai pulsanti */
-/* .backup-button,
-.restore-button,
-.delete-all-button {
-  background-color: #3498db;
-  color: white;
-  font-size: 14px;
-  border: none;
-  padding: 10px 15px;
-  margin-top: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-} */
-
-/* .backup-button:hover,
-.restore-button:hover,
-.delete-all-button:hover {
-  background-color: #2980b9;
-}
-
-
- */
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -352,7 +337,7 @@ body {
   left: 190px;
   width: 70%;
   height: 100%;
-  background-color: #1d1d1d;
+  background-color: #141414;
   /* Colore di sfondo del menu */
   color: white;
   /* Colore del testo all'interno del menu */
@@ -368,17 +353,17 @@ body {
   z-index: 2;
 }
 
-.header-menu{
+.header-menu {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-right: 85px;
+  padding-right: 65px;
   padding-left: 15px;
   position: relative;
-  top: 26px;
+  top: 8px;
 }
 
-.close{
+.close {
   background: none;
   border: none;
   color: white;
@@ -406,18 +391,6 @@ body {
   flex: 1;
   background-color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
-}
-
-.menu-content {
-  width: 50%;
-  max-width: 250px;
-  height: 100%;
-  background-color: #1c1c1c;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
-
 }
 
 .menu-content .close-menu {
@@ -478,10 +451,17 @@ body {
   transition: transform 1s ease;
 }
 
+.dragging {
+  opacity: 0.5; /*
+  pointer-events: none;
+  transition: none; */
+}
+
 .contact.dragging {
   opacity: 0.5;
+/*
   background-color: #f0f0f0;
-  cursor: move;
+  cursor: move; */
 }
 
 .calendar,
@@ -499,34 +479,35 @@ body {
   margin-top: 30px;
   margin-bottom: 10px;
   margin-left: -5px;
-  font-weight: bold; /* Imposta il testo in grassetto */
+  font-weight: bold;
+  /* Imposta il testo in grassetto */
 }
 
-.color{
+.color {
   display: flex;
-position: relative;
-justify-content: space-evenly;
-top: 25px;
+  position: relative;
+  justify-content: space-evenly;
+  top: 25px;
 }
 
-.buttoncolor1{
-  height: 20px;
+.buttoncolor1 {
+  height: 21px;
   width: 20px;
   border-radius: 50%;
   background-color: #007BFE;
   border: none;
 }
 
-.buttoncolor2{
-  height: 20px;
+.buttoncolor2 {
+  height: 21px;
   width: 20px;
   border-radius: 50%;
   background-color: #00ff9e;
   border: none;
 }
 
-.buttoncolor3{
-  height: 20px;
+.buttoncolor3 {
+  height: 21px;
   width: 20px;
   border-radius: 50%;
   background-color: #EC404E;
@@ -536,13 +517,10 @@ top: 25px;
 
 
 
-/* aggiunta */
-
-/* Aggiungi questa regola */
 .media-player {
-  position: fixed;
+  position: absolute;
   /* Posizione fissa */
-  bottom: 20px;
+  bottom: 40px;
   /* Imposta la distanza dal basso */
   left: 20px;
   /* Imposta la distanza dalla sinistra */
@@ -556,17 +534,15 @@ top: 25px;
   box-sizing: border-box;
   z-index: 10;
   /* Impedisce che venga coperto da altri elementi */
+  /*  transition: border-radius 0.2s ease, width 0.1s ease; */
+  transition: left 0.1s ease, width 0.1s ease, border-radius 0.1s ease;
+  /* Transizioni per l'effetto */
 }
 
 /* Modifica il margine da "bottom" come segue */
 
 
 .beat-selection {
-  /*
-  width: 50px;
-  height: 50px;
-  background-color: #ffffff;
-  */
   margin: 10px;
   font-size: 25px;
   border-radius: 5px;
@@ -586,7 +562,7 @@ top: 25px;
   margin: 0;
   width: 140px;
   /* Imposta una larghezza massima */
-  overflow: hidden;
+  /* overflow: hidden; */
   /* Nasconde il testo in eccesso */
   white-space: nowrap;
   /* Impedisce il testo di andare a capo */
@@ -603,15 +579,17 @@ top: 25px;
 
 .controls {
   display: flex;
-  gap: 5px;
+  /* gap: 5px; */
 }
 
 .control-btn {
   background-color: transparent;
   border: none;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
+  padding-right: 10px;
+  padding-left: 15px;
 }
 
 .progress-bar-container {
@@ -622,7 +600,7 @@ top: 25px;
   height: 4px;
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 2.5px;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: none;
   /* Nasconde la barra finché non si seleziona un beat */
   cursor: pointer;
@@ -637,45 +615,17 @@ top: 25px;
 }
 
 
-/* fine aggiunta */
-
-
-
-
-
-
-
-
-
 /* -------------------- MENU CHAT PAGE -------------------------------------------------------------------------------- */
 
 .settings-page {
   width: 100%;
   height: 100%;
-  max-width: 380px;
-  background-color: #1c1c1c;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
+  /* overflow: hidden; */
+  /* position:; */
 }
-
-/* .settings-header {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  background-color: #121212;
-  border-bottom: 1px solid #333;
-  border-radius: 15px 15px 0 0;
-}
-
-.settings-header h2 {
-  flex: 1;
-  text-align: center;
-  font-size: 18px;
-  margin: 0;
-  color: #ffffff;
-} */
 
 .setting-header {
   display: flex;
@@ -685,11 +635,11 @@ top: 25px;
   padding-right: 25px;
 }
 
-h2{
+h2 {
   color: #ec404f;
 }
 
-.spazio{
+.spazio {
   opacity: 0;
 }
 
@@ -717,7 +667,7 @@ h2{
 
 
 .settings-button {
-  background-color: #333;
+  background-color: #ec404f;
   color: #ffffff;
   font-size: 16px;
   padding: 10px 20px;
@@ -727,20 +677,10 @@ h2{
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-
-.settings-button:hover {
-  background-color: #ec404f;
-  transform: scale(1.05);
-}
-
-
-.settings-button:active {
-  transform: scale(0.95);
-}
-
-.check{
+.check {
   margin-top: 40px;
 }
+
 .custom-checkbox input {
   display: none;
 }
@@ -754,7 +694,7 @@ h2{
   border: none;
   transition: transform 0.3s ease, background-color 0.3s ease;
   width: 95px;
-  text-align: center; 
+  text-align: center;
   display: flex;
   flex-direction: column;
   margin: 10px;

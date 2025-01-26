@@ -1,3 +1,5 @@
+/* INIT ---------------------------------------------------------------------------------------------------------------------------- */
+
 // Elementi della pagina
 const homePage = document.getElementById("home-page");
 const chatPage = document.getElementById("chat-page");
@@ -35,7 +37,7 @@ request.onupgradeneeded = function (event) {
   }
 };
 
-
+/* HOME PAGE & CHAT PAGE ---------------------------------------------------------------------------------------------------------- */
 
 // Elemento della barra di ricerca
 const searchBar = document.querySelector(".search-bar1");
@@ -62,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
   chatPage.style.display = "none";
 });
 
-
 // Funzione per aprire una chat
 function openChat(name) {
   currentChatName = name; // Aggiorna la chat corrente
@@ -70,11 +71,9 @@ function openChat(name) {
   chatPage.style.display = "block";
   chatTitle.innerText = name;
 
-  // Pulire il contenitore delle note
-  noteContainer.innerHTML = "";
+  noteContainer.innerHTML = ""; // Pulire il contenitore delle note
 
-  // Caricare le note specifiche per questa chat
-  loadNotes();
+  loadNotes(); // Caricare le note specifiche per questa chat
 }
 
 // Tornare alla homepage
@@ -87,64 +86,280 @@ backButton.addEventListener("click", () => {
 // Aggiungere una nuova chat
 addChatButton.addEventListener("click", () => {
   const chatName = prompt("Inserisci il nome della chat:");
+  if (!chatName) {
+    return; // Interrompe l'esecuzione se il nome della chat non è stato inserito
+  }
+
   const artistName = prompt("Di chi è la canzone:");
-  if (chatName && artistName) {
-    const chatItem = document.createElement("div");
-    chatItem.classList.add("chat-item");
-    chatItem.innerHTML = ` 
-      <div class="chat-square"></div> <!-- Quadrato bianco -->
-      <div style="display: flex; flex-direction: column;">
+  if (!artistName) {
+    return; // Interrompe l'esecuzione se il nome dell'artista non è stato inserito
+  }
+
+  // Creazione dell'elemento chat solo se entrambi i campi sono compilati
+  const chatItem = document.createElement("div");
+  chatItem.classList.add("chat-item");
+  chatItem.innerHTML = ` 
+    <div class="chat-square"></div> <!-- Quadrato bianco -->
+    <div style="display: flex; flex-direction: column;">
       <span>${chatName}</span>
       <span>${artistName}</span>
-      </div>
-      
-    `;
-    chatItem.addEventListener("click", () => openChat(chatName));
-    chatList.appendChild(chatItem);
-    /* <button onclick="deleteChat(this)">X</button> */
+      <button onclick="deleteChat(this)" class="canc">X</button> <!-- Bottone per eliminare la chat -->
+    </div>
+  `;
 
-    // Crea la chat vuota e salva
-    const newChat = {
-      name: chatName,
-      artist: artistName, // Salviamo anche l'artista
-      notes: [{ title: "Titolo iniziale", text: "Testo iniziale" }]
-    };
+  // Aggiungiamo l'evento per aprire la chat quando viene cliccata
+  chatItem.addEventListener("click", () => openChat(chatName));
+  chatList.appendChild(chatItem); // Aggiungiamo la chat alla lista delle chat
 
-    saveChat(newChat);
-    openChat(chatName);
-  }
+  // Crea la chat vuota e salva
+  const newChat = {
+    name: chatName,
+    artist: artistName, // Salviamo anche l'artista
+    notes: [{ title: "Titolo iniziale", text: "Testo iniziale" }]
+  };
+
+  saveChat(newChat);
+  openChat(chatName);
 });
+
 
 // Eliminare una chat
 function deleteChat(button) {
-  const chatName = button.parentElement.querySelector("span").textContent;
-  deleteChatData(chatName);
-  button.parentElement.remove();
+  const chatName = button.parentElement.querySelector("span").textContent; // Otteniamo il nome della chat da eliminare
+  deleteChatData(chatName); // Rimuoviamo i dati della chat
+  button.parentElement.remove(); // Rimuoviamo l'elemento HTML della chat
 }
 
 // Aggiungere un nuovo blocco di note
 function addNoteBlock(title = "Titolo...", text = "Testo...") {
-  const noteBlock = document.createElement("div");
-  noteBlock.classList.add("note-block");
+  const noteBlock = document.createElement("div"); // Creiamo un nuovo blocco di nota
+  noteBlock.classList.add("note-block"); // Aggiungiamo la classe per il blocco di nota
 
-  const noteTitle = document.createElement("div");
-  noteTitle.classList.add("note-title");
-  noteTitle.contentEditable = true;
-  noteTitle.textContent = title;
+  // AGGIUNTA Generiamo un ID univoco per il blocco
+  /*   const noteBlockId = `note-${new Date().getTime()}`;
+    noteBlock.setAttribute("id", noteBlockId);  */// Assegniamo l'ID al blocco
+
+  const noteTitle = document.createElement("div"); // Creiamo il titolo della nota
+  noteTitle.classList.add("note-title"); // Aggiungiamo la classe per il titolo
+  noteTitle.contentEditable = true; // Impostiamo il titolo come modificabile
+  noteTitle.textContent = title; // Impostiamo il titolo iniziale
 
   const noteText = document.createElement("div");
   noteText.classList.add("note-text");
   noteText.contentEditable = true;
   noteText.textContent = text;
 
+
+// Crea il pulsante di trascinamento per spostare il blocco
+const dragHandle = document.createElement("div");
+dragHandle.classList.add("drag-handle");
+dragHandle.innerHTML = ` 
+<div class="contai"></div> 
+`;
+
+// Aggiungiamo il pulsante di trascinamento al blocco
+noteBlock.appendChild(dragHandle);
+
+// Disabilitiamo il drag nativo del blocco
+noteBlock.setAttribute("draggable", false);
+
+// Aggiungiamo il supporto touch per il drag handle
+dragHandle.addEventListener("touchstart", (event) => {
+  event.preventDefault();
+
+  const touch = event.touches[0];
+  const startX = touch.clientX;
+  const startY = touch.clientY;
+
+  const blockRect = noteBlock.getBoundingClientRect();
+  const offsetX = startX - blockRect.left;
+  const offsetY = startY - blockRect.top;
+
+  // Aggiungiamo uno stile temporaneo al blocco durante il trascinamento
+  noteBlock.classList.add("dragging");
+  /* noteBlock.style.position = "absolute";
+  noteBlock.style.zIndex = "1000"; */
+
+  const containerRect = noteContainer.getBoundingClientRect();
+
+  const moveHandler = (moveEvent) => {
+    const moveTouch = moveEvent.touches[0];
+    const newX = moveTouch.clientX - offsetX;
+    const newY = moveTouch.clientY - offsetY;
+
+    // Mantieni il blocco entro i limiti del contenitore
+    const boundedX = Math.max(containerRect.left, Math.min(newX, containerRect.right - blockRect.width));
+    const boundedY = Math.max(containerRect.top, Math.min(newY, containerRect.bottom - blockRect.height));
+
+    // Aggiorna posizione visiva del blocco
+    noteBlock.style.left = `${boundedX - containerRect.left}px`;
+    noteBlock.style.top = `${boundedY - containerRect.top}px`;
+
+    // Calcola la posizione e inserisce dinamicamente il blocco
+    const afterElement = getDragAfterElement(noteContainer, moveTouch.clientY);
+    if (afterElement == null) {
+      noteContainer.appendChild(noteBlock); // Se nessun elemento trovato, aggiungi alla fine
+    } else {
+      noteContainer.insertBefore(noteBlock, afterElement); // Inserisci prima del blocco target
+    }
+  };
+
+  const endHandler = () => {
+    // Ripristina stile iniziale
+    noteBlock.classList.remove("dragging");
+    noteBlock.style.position = "static";
+    noteBlock.style.zIndex = "";
+
+    // Rimuovi gli eventi di trascinamento
+    document.removeEventListener("touchmove", moveHandler);
+    document.removeEventListener("touchend", endHandler);
+
+    // Salva la nuova disposizione (funzione da implementare)
+    saveNotes();
+  };
+
+  // Aggiungi eventi per movimento e rilascio
+  document.addEventListener("touchmove", moveHandler, { passive: false });
+  document.addEventListener("touchend", endHandler);
+}, { passive: false });
+
+// Funzione per trovare l'elemento dopo il quale inserire il blocco
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll(".note-block:not(.dragging)")];
+
+  console.log(draggableElements); // Debug: vedi gli altri blocchi di note
+
+  let closest = null;
+  let closestOffset = Number.POSITIVE_INFINITY;
+
+  draggableElements.forEach((child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - (box.top + box.height / 2);
+
+    if (offset < 0 && Math.abs(offset) < closestOffset) {
+      closestOffset = Math.abs(offset);
+      closest = child;
+    }
+  });
+
+  console.log(closest); // Debug: vedi quale blocco è più vicino
+  return closest;
+}
+
+
+
+
+/* ----------------------------------------------------------------------------------------------------------------------------- */
+
+const rec = document.createElement("div");
+rec.classList.add("rec");
+
+rec.innerHTML = `
+<div class="contai2"></div>
+`;
+noteBlock.appendChild(rec);
+
+let isRecording = false;
+let isTriangle = false;
+let recorder;
+let audioContext;
+
+// Gestione eventi per desktop e mobile
+const startEvent = "ontouchstart" in window ? "touchstart" : "click";
+
+rec.addEventListener(startEvent, () => {
+  if (!isTriangle) {
+    if (!isRecording) {
+      startRecording();
+    } else {
+      stopRecording();
+    }
+  }
+});
+
+rec.addEventListener("mousedown", () => {
+  if (isTriangle) {
+    setTimeout(() => {
+      if (rec.matches(":active")) {
+        const confirmDelete = confirm("Vuoi cancellare la registrazione?");
+        if (confirmDelete) {
+          resetButton();
+        }
+      }
+    }, 1000);
+  }
+});
+
+function startRecording() {
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then((stream) => {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const input = audioContext.createMediaStreamSource(stream);
+
+      recorder = new Recorder(input);
+      recorder.record();
+
+      isRecording = true;
+      console.log("Registrazione avviata.");
+    })
+    .catch((err) => {
+      console.error("Errore nell'accesso al microfono:", err);
+      alert("Devi consentire l'accesso al microfono per registrare.");
+    });
+}
+
+function stopRecording() {
+  if (recorder) {
+    recorder.stop();
+    isRecording = false;
+    isTriangle = true;
+    rec.classList.add("triangle");
+    rec.textContent = "";
+
+    recorder.exportWAV((blob) => {
+      const audioUrl = URL.createObjectURL(blob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+      console.log("Registrazione completata e riprodotta.");
+    });
+
+    console.log("Registrazione interrotta.");
+  }
+}
+
+function resetButton() {
+  isRecording = false;
+  isTriangle = false;
+  rec.classList.remove("triangle");
+  rec.textContent = "rec";
+  console.log("Registrazione cancellata.");
+}
+
+
+
+  /* ----------------------------------------------------------------------------------------------------------------------------- */
+
+
   // Aggiungere il pulsante di cancellazione (X)
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-btn");
   deleteButton.innerHTML = "&#10006;";
   deleteButton.addEventListener("click", () => {
-    if (confirm("Sei sicuro di voler eliminare questo paragrafo?")) {
-      noteBlock.remove();
-      saveNotes();
+    const allNoteBlocks = document.querySelectorAll(".note-block");
+
+    if (allNoteBlocks.length > 1) {
+      if (confirm("Sei sicuro di voler eliminare questo paragrafo?")) {
+        noteBlock.remove();
+        saveNotes();
+      }
+    } else {
+      if (confirm("Non puoi eliminare l'unica nota. Vuoi svuotarla e ripristinare i placeholder?")) {
+        const noteTitle = noteBlock.querySelector(".note-title");
+        const noteText = noteBlock.querySelector(".note-text");
+        noteTitle.textContent = "Titolo...";
+        noteText.textContent = "Testo...";
+        saveNotes();
+      }
     }
   });
 
@@ -158,6 +373,7 @@ function addNoteBlock(title = "Titolo...", text = "Testo...") {
   noteBlock.appendChild(titleWrapper);
   noteBlock.appendChild(noteText);
   noteContainer.appendChild(noteBlock);
+  noteBlock.appendChild(dragHandle);
 
   // Salvare le modifiche sui cambiamenti
   const saveOnChange = () => saveNotes();
@@ -202,12 +418,6 @@ function addNoteBlock(title = "Titolo...", text = "Testo...") {
       noteTitle.textContent = "";
     }
   });
-
-  /*   noteTitle.addEventListener("blur", () => {
-      if (noteTitle.textContent.trim() === "") {
-        noteTitle.textContent = "Titolo...";
-      }
-    }); */
 
   // Gestire il placeholder per noteText
   noteText.addEventListener("focus", () => {
@@ -306,19 +516,21 @@ function loadChats() {
       <div style="display: flex; flex-direction: column;">
         <span>${chat.name}</span>
         <div class="artist-name">${chat.artist}</div> <!-- Mostra l'artista -->
+        <button onclick="deleteChat(this)" class="canc">X</button> <!-- Bottone per eliminare la chat -->
         </div>
         
       `;
       chatItem.addEventListener("click", () => openChat(chat.name));
       chatList.appendChild(chatItem);
-      /* <button class="contact-delete" onclick="deleteChat(this)">X</button> */
     });
   };
 
   request.onerror = function (event) {
     console.log("Errore nel caricamento delle chat:", event);
   };
+
 }
+
 
 // Funzione per salvare una chat nel database
 function saveChat(chat) {
@@ -333,22 +545,6 @@ function saveChat(chat) {
 
   request.onerror = function (event) {
     console.log("Errore nel salvataggio della chat:", event);
-  };
-}
-
-// Funzione per eliminare una chat
-function deleteChatData(chatName) {
-  const transaction = db.transaction(["chats"], "readwrite");
-  const objectStore = transaction.objectStore("chats");
-
-  const request = objectStore.delete(chatName);
-
-  request.onsuccess = function () {
-    console.log("Chat eliminata con successo");
-  };
-
-  request.onerror = function (event) {
-    console.log("Errore nell'eliminare la chat:", event);
   };
 }
 
@@ -382,6 +578,9 @@ function saveNotes() {
     console.log("Errore nel salvataggio delle note:", event);
   };
 }
+
+
+/* MENU HOME PAGE ------------------------------------------------------------------------------------------------------------------ */
 
 // Funzione per creare un backup delle chat
 backupButton.addEventListener("click", () => {
@@ -473,22 +672,15 @@ function closeHomeMenu() {
   document.querySelector(".menu-icon").classList.remove("hidden"); // Mostra l'icona del menu
 }
 
-
-
 function openChatMenu() {
   document.getElementById("chat-page").style.display = "none";
   document.getElementById("settings-page").style.display = "flex";
 }
 
-
 function goBackFromSettings() {
   document.getElementById("settings-page").style.display = "none";
   document.getElementById("chat-page").style.display = "flex";
 }
-
-
-
-
 
 function toggleMenu() {
   const menu = document.getElementById("menu");
@@ -510,21 +702,60 @@ function closeMenu() {
   menuIcon.style.display = "block"; // Rendi visibile l'icona del menu
 }
 
+// Funzione per cambiare i colori dell'app
+function changeAppColors(oldColor, newColor) {
+  // Cambia gli stili inline nel DOM
+  const elements = document.querySelectorAll('*');
+  elements.forEach(element => {
+    const computedStyle = getComputedStyle(element);
 
+    // Controlla e aggiorna colori di sfondo, testo e bordo
+    ['backgroundColor', 'color', 'borderColor'].forEach(property => {
+      if (computedStyle[property] === oldColor) {
+        element.style[property] = newColor;
+      }
+    });
+  });
 
+  // Aggiorna i colori definiti nei file CSS
+  const styleSheets = Array.from(document.styleSheets);
+  styleSheets.forEach(styleSheet => {
+    try {
+      const rules = styleSheet.cssRules || [];
+      Array.from(rules).forEach(rule => {
+        if (rule.style) {
+          ['background-color', 'color', 'border-color'].forEach(property => {
+            if (rule.style[property] === oldColor) {
+              rule.style[property] = newColor;
+            }
+          });
+        }
+      });
+    } catch (error) {
+      console.warn(`Non è stato possibile accedere a ${styleSheet.href}`);
+    }
+  });
+}
 
+// Aggiunge un listener per il click del pulsante
+document.getElementById('changeColorButton1').addEventListener('click', () => {
+  changeAppColors('rgb(236, 64, 79)', 'rgb(0, 123, 255)');
+  changeAppColors('rgb(0, 255, 157)', 'rgb(0, 123, 255)');
+});
 
+// Aggiunge un listener per il click del pulsante
+document.getElementById('changeColorButton2').addEventListener('click', () => {
+  changeAppColors('rgb(236, 64, 79)', 'rgb(0, 255, 157)');
+  changeAppColors('rgb(0, 123, 255)', 'rgb(0, 255, 157)');
+});
 
+// Aggiunge un listener per il click del pulsante
+document.getElementById('changeColorButton3').addEventListener('click', () => {
+  changeAppColors('rgb(0, 123, 255)', 'rgb(236, 64, 79)');
+  changeAppColors('rgb(0, 255, 157)', 'rgb(236, 64, 79)');
+});
 
-
-
-
-
-
-
-
-
-
+/* PAGINA CON TRASCINAMENTO ------------------------------------------------------------------------------------------------------- */
 
 // Selezioniamo gli elementi HTML che useremo
 const shape = document.getElementById('add-chat'); // Il cerchio
@@ -547,20 +778,24 @@ const drag = (x) => {
 
   const deltaX = Math.abs(x - startX); // Calcola la distanza trascinata
 
-  // Calcola la proporzione di espansione del cerchio
-  const scaleX = Math.min(deltaX / maxDistance, 1); // Limitato a 1 per evitare dimensioni troppo grandi
+  if (deltaX > 100) { //se trascino pr piu di 50 parte l'effetto sennò no
 
-  // Aggiorna la larghezza in base alla proporzione
-  const newWidth = 100 + scaleX * (maxWidth - 100);
+    // Calcola la proporzione di espansione del cerchio
+    const scaleX = Math.min(deltaX / maxDistance, 1); // Limitato a 1 per evitare dimensioni troppo grandi
 
-  shape.style.width = `${newWidth}px`; // Imposta la nuova larghezza
+    // Aggiorna la larghezza in base alla proporzione
+    const newWidth = 100 + scaleX * (maxWidth - 100);
 
-  // Riduci il border-radius in base alla proporzione per ottenere un rettangolo
-  shape.style.borderRadius = `${Math.max(50 - scaleX * 50, 0)}%`;
+    shape.style.width = `${newWidth}px`; // Imposta la nuova larghezza
 
-  // Se la larghezza ha raggiunto il massimo, cambia pagina
-  if (newWidth >= maxWidth) {
-    window.location.href = "musica.html"; // Reindirizza alla pagina 'musica.html'
+    // Riduci il border-radius in base alla proporzione per ottenere un rettangolo
+    shape.style.borderRadius = `${Math.max(50 - scaleX * 50, 0)}%`;
+
+    // Se la larghezza ha raggiunto il massimo, cambia pagina
+    if (newWidth >= maxWidth) {
+      window.location.href = "musica.html"; // Reindirizza alla pagina 'musica.html'
+    }
+
   }
 };
 
@@ -589,7 +824,7 @@ document.addEventListener('touchmove', (e) => {
 document.addEventListener('touchend', endDrag);
 
 
-/* aggiunta */
+/* media player */
 
 const audioPlayer = document.getElementById("audio-player");
 const progressBar = document.getElementById("progress-bar");
@@ -664,41 +899,6 @@ function resetButtonState() {
   document.querySelector(".progress-bar-container").style.display = "none";
   document.querySelector(".beat-title").textContent = "Scegli il beat";
 }
-
-
-// Vecchio codice pt.2
-/* function loadAudio(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const fileURL = URL.createObjectURL(file);
-        audioPlayer.src = fileURL;
-        audioPlayer.load();
-        document.querySelector(".progress-bar-container").style.display = "block";
-        document.querySelector(".beat-title").textContent = file.name;
-
-        // Cambia l'icona in "x"
-        const icon = document.getElementById("beat-button").querySelector("i");
-        icon.classList.remove("fa-plus");
-        icon.classList.add("fa-xmark");
-
-        resetPlayer();
-    }
-} */
-
-/* carica beat - vecchio codice*/
-/* function loadAudio(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const fileURL = URL.createObjectURL(file);
-        audioPlayer.src = fileURL;
-        audioPlayer.load();
-        document.querySelector(".progress-bar-container").style.display = "block";
-        document.querySelector(".beat-title").textContent = file.name;
-        resetPlayer();
-    }
-} */
-
-
 
 function resetPlayer() {
   isPlaying = false;
@@ -787,61 +987,4 @@ document.querySelector(".progress-bar-container").addEventListener("click", (eve
 
   // Aggiorna la barra di progresso e il minutaggio
   updateProgress();
-});
-
-
-/* fine aggiunta */
-
-
-// Funzione per cambiare i colori dell'app
-function changeAppColors(oldColor, newColor) {
-  // Cambia gli stili inline nel DOM
-  const elements = document.querySelectorAll('*');
-  elements.forEach(element => {
-    const computedStyle = getComputedStyle(element);
-
-    // Controlla e aggiorna colori di sfondo, testo e bordo
-    ['backgroundColor', 'color', 'borderColor'].forEach(property => {
-      if (computedStyle[property] === oldColor) {
-        element.style[property] = newColor;
-      }
-    });
-  });
-
-  // Aggiorna i colori definiti nei file CSS
-  const styleSheets = Array.from(document.styleSheets);
-  styleSheets.forEach(styleSheet => {
-    try {
-      const rules = styleSheet.cssRules || [];
-      Array.from(rules).forEach(rule => {
-        if (rule.style) {
-          ['background-color', 'color', 'border-color'].forEach(property => {
-            if (rule.style[property] === oldColor) {
-              rule.style[property] = newColor;
-            }
-          });
-        }
-      });
-    } catch (error) {
-      console.warn(`Non è stato possibile accedere a ${styleSheet.href}`);
-    }
-  });
-}
-
-// Aggiunge un listener per il click del pulsante
-document.getElementById('changeColorButton1').addEventListener('click', () => {
-  changeAppColors('rgb(236, 64, 79)', 'rgb(0, 123, 255)');
-  changeAppColors('rgb(0, 255, 157)', 'rgb(0, 123, 255)');
-});
-
-// Aggiunge un listener per il click del pulsante
-document.getElementById('changeColorButton2').addEventListener('click', () => {
-  changeAppColors('rgb(236, 64, 79)', 'rgb(0, 255, 157)');
-  changeAppColors('rgb(0, 123, 255)', 'rgb(0, 255, 157)');
-});
-
-// Aggiunge un listener per il click del pulsante
-document.getElementById('changeColorButton3').addEventListener('click', () => {
-  changeAppColors('rgb(0, 123, 255)', 'rgb(236, 64, 79)');
-  changeAppColors('rgb(0, 255, 157)', 'rgb(236, 64, 79)');
 });

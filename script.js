@@ -251,23 +251,24 @@ function getDragAfterElement(container, y) {
 
 /* ----------------------------------------------------------------------------------------------------------------------------- */
 
+// Crea il pulsante di rec
 const rec = document.createElement("div");
 rec.classList.add("rec");
 
-rec.innerHTML = `
-<div class="contai2"></div>
+rec.innerHTML = ` 
+<div class="contai2"></div> 
 `;
+// Aggiungiamo il pulsante di rec
 noteBlock.appendChild(rec);
 
+// Variabili per tracciare lo stato della registrazione
 let isRecording = false;
 let isTriangle = false;
 let mediaRecorder;
 let audioChunks = [];
 
-// Gestione eventi per desktop e mobile
-const startEvent = "ontouchstart" in window ? "touchstart" : "click";
-
-rec.addEventListener(startEvent, () => {
+// Gestione click sul pulsante "rec"
+rec.addEventListener("click", () => {
   if (!isTriangle) {
     if (!isRecording) {
       startRecording();
@@ -277,6 +278,7 @@ rec.addEventListener(startEvent, () => {
   }
 });
 
+// Gestione del tasto premuto prolungato per la cancellazione
 rec.addEventListener("mousedown", () => {
   if (isTriangle) {
     setTimeout(() => {
@@ -286,25 +288,26 @@ rec.addEventListener("mousedown", () => {
           resetButton();
         }
       }
-    }, 1000);
+    }, 1000); // 1 secondo per mostrare il prompt
   }
 });
 
+// Funzioni per la gestione della registrazione
 function startRecording() {
-  navigator.mediaDevices.getUserMedia({ audio: true })
+  navigator.mediaDevices.getUserMedia({ audio: true }) // Richiede il microfono
     .then((stream) => {
       mediaRecorder = new MediaRecorder(stream);
       audioChunks = [];
 
       mediaRecorder.ondataavailable = (event) => {
-        audioChunks.push(event.data);
+        audioChunks.push(event.data); // Colleziona i chunk di dati audio
       };
 
       mediaRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunks, { type: "audio/mpeg" });
         const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
-        audio.play();
+        audio.play(); // Riproduce l'audio registrato
         console.log("Registrazione completata e riprodotta.");
       };
 
@@ -314,17 +317,16 @@ function startRecording() {
     })
     .catch((err) => {
       console.error("Errore nell'accesso al microfono:", err);
-      alert("Devi consentire l'accesso al microfono per registrare.");
     });
 }
 
 function stopRecording() {
   if (mediaRecorder) {
-    mediaRecorder.stop();
+    mediaRecorder.stop(); // Ferma la registrazione
     isRecording = false;
     isTriangle = true;
     rec.classList.add("triangle");
-    rec.textContent = "";
+    rec.textContent = ""; // Rimuove il testo nel triangolo
     console.log("Registrazione interrotta.");
   }
 }
@@ -333,10 +335,9 @@ function resetButton() {
   isRecording = false;
   isTriangle = false;
   rec.classList.remove("triangle");
-  rec.textContent = "rec";
+  rec.textContent = "rec"; // Ripristina l'etichetta
   console.log("Registrazione cancellata.");
 }
-
 
 
   /* ----------------------------------------------------------------------------------------------------------------------------- */

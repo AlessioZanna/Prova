@@ -261,8 +261,8 @@ noteBlock.appendChild(rec);
 
 let isRecording = false;
 let isTriangle = false;
-let recorder;
-let audioContext;
+let mediaRecorder;
+let audioChunks = [];
 
 // Gestione eventi per desktop e mobile
 const startEvent = "ontouchstart" in window ? "touchstart" : "click";
@@ -293,12 +293,22 @@ rec.addEventListener("mousedown", () => {
 function startRecording() {
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then((stream) => {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      const input = audioContext.createMediaStreamSource(stream);
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
 
-      recorder = new Recorder(input);
-      recorder.record();
+      mediaRecorder.ondataavailable = (event) => {
+        audioChunks.push(event.data);
+      };
 
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: "audio/mpeg" });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+        console.log("Registrazione completata e riprodotta.");
+      };
+
+      mediaRecorder.start();
       isRecording = true;
       console.log("Registrazione avviata.");
     })
@@ -309,20 +319,12 @@ function startRecording() {
 }
 
 function stopRecording() {
-  if (recorder) {
-    recorder.stop();
+  if (mediaRecorder) {
+    mediaRecorder.stop();
     isRecording = false;
     isTriangle = true;
     rec.classList.add("triangle");
     rec.textContent = "";
-
-    recorder.exportWAV((blob) => {
-      const audioUrl = URL.createObjectURL(blob);
-      const audio = new Audio(audioUrl);
-      audio.play();
-      console.log("Registrazione completata e riprodotta.");
-    });
-
     console.log("Registrazione interrotta.");
   }
 }

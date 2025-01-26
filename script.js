@@ -251,34 +251,38 @@ function getDragAfterElement(container, y) {
 
 /* ----------------------------------------------------------------------------------------------------------------------------- */
 
-// Crea il pulsante di rec
 const rec = document.createElement("div");
 rec.classList.add("rec");
 
-rec.innerHTML = ` 
-<div class="contai2"></div> 
+rec.innerHTML = `
+<div class="contai2"></div>
 `;
-// Aggiungiamo il pulsante di rec
 noteBlock.appendChild(rec);
 
-// Variabili per tracciare lo stato della registrazione
 let isRecording = false;
 let isTriangle = false;
-let mediaRecorder;
-let audioChunks = [];
+let recorder;
+let audioContext;
 
-// Gestione click sul pulsante "rec"
-rec.addEventListener("click", () => {
+// Gestione eventi per desktop e mobile
+const startEvent = "ontouchstart" in window ? "touchstart" : "click";
+
+rec.addEventListener(startEvent, () => {
   if (!isTriangle) {
     if (!isRecording) {
-      startRecording();
+      checkMicrophonePermission().then((hasPermission) => {
+        if (hasPermission) {
+          startRecording();
+        } else {
+          alert("Devi consentire l'accesso al microfono per registrare.");
+        }
+      });
     } else {
       stopRecording();
     }
   }
 });
 
-// Gestione del tasto premuto prolungato per la cancellazione
 rec.addEventListener("mousedown", () => {
   if (isTriangle) {
     setTimeout(() => {
@@ -288,45 +292,55 @@ rec.addEventListener("mousedown", () => {
           resetButton();
         }
       }
-    }, 1000); // 1 secondo per mostrare il prompt
+    }, 1000);
   }
 });
 
-// Funzioni per la gestione della registrazione
+function checkMicrophonePermission() {
+  return navigator.permissions.query({ name: "microphone" }).then((permissionStatus) => {
+    console.log("Permesso microfono:", permissionStatus.state);
+    return permissionStatus.state === "granted" || permissionStatus.state === "prompt";
+  }).catch((err) => {
+    console.error("Errore durante il controllo dei permessi:", err);
+    return false;
+  });
+}
+
 function startRecording() {
-  navigator.mediaDevices.getUserMedia({ audio: true }) // Richiede il microfono
+  console.log("Tentativo di accesso al microfono...");
+  navigator.mediaDevices.getUserMedia({ audio: true })
     .then((stream) => {
-      mediaRecorder = new MediaRecorder(stream);
-      audioChunks = [];
+      console.log("Accesso al microfono riuscito.");
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const input = audioContext.createMediaStreamSource(stream);
 
-      mediaRecorder.ondataavailable = (event) => {
-        audioChunks.push(event.data); // Colleziona i chunk di dati audio
-      };
+      recorder = new Recorder(input); // Assicurati di avere il file "recorder.js"
+      recorder.record();
 
-      mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: "audio/mpeg" });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audio.play(); // Riproduce l'audio registrato
-        console.log("Registrazione completata e riprodotta.");
-      };
-
-      mediaRecorder.start();
       isRecording = true;
       console.log("Registrazione avviata.");
     })
     .catch((err) => {
       console.error("Errore nell'accesso al microfono:", err);
+      alert(`Errore: ${err.name} - ${err.message}`);
     });
 }
 
 function stopRecording() {
-  if (mediaRecorder) {
-    mediaRecorder.stop(); // Ferma la registrazione
+  if (recorder) {
+    recorder.stop();
     isRecording = false;
     isTriangle = true;
     rec.classList.add("triangle");
-    rec.textContent = ""; // Rimuove il testo nel triangolo
+    rec.textContent = "";
+
+    recorder.exportWAV((blob) => {
+      const audioUrl = URL.createObjectURL(blob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+      console.log("Registrazione completata e riprodotta.");
+    });
+
     console.log("Registrazione interrotta.");
   }
 }
@@ -335,7 +349,7 @@ function resetButton() {
   isRecording = false;
   isTriangle = false;
   rec.classList.remove("triangle");
-  rec.textContent = "rec"; // Ripristina l'etichetta
+  rec.textContent = "rec";
   console.log("Registrazione cancellata.");
 }
 

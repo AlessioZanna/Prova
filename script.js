@@ -251,7 +251,6 @@ function getDragAfterElement(container, y) {
 
 /* ----------------------------------------------------------------------------------------------------------------------------- */
 
-const noteBlock = document.getElementById("noteBlock");
 const rec = document.createElement("div");
 rec.classList.add("rec");
 
@@ -264,45 +263,58 @@ let isRecording = false;
 let isTriangle = false;
 let recorder;
 let audioContext;
-let audioUrl = null; // Memorizza l'URL dell'audio registrato
 
+// Gestione eventi per desktop e mobile
 const startEvent = "ontouchstart" in window ? "touchstart" : "click";
 
 rec.addEventListener(startEvent, () => {
   if (!isTriangle) {
     if (!isRecording) {
-      startRecording();
+      checkMicrophonePermission().then((hasPermission) => {
+        if (hasPermission) {
+          startRecording();
+        } else {
+          alert("Devi consentire l'accesso al microfono per registrare.");
+        }
+      });
     } else {
       stopRecording();
     }
   }
 });
 
-rec.addEventListener("click", () => {
-  if (isTriangle && audioUrl) {
-    const audio = new Audio(audioUrl);
-    audio.play();
-    console.log("Riproduzione audio avviata.");
+rec.addEventListener("mousedown", () => {
+  if (isTriangle) {
+    setTimeout(() => {
+      if (rec.matches(":active")) {
+        const confirmDelete = confirm("Vuoi cancellare la registrazione?");
+        if (confirmDelete) {
+          resetButton();
+        }
+      }
+    }, 1000);
   }
 });
 
-function fixAudioContext() {
-  if (audioContext.state === "suspended" && "ontouchstart" in window) {
-    document.body.addEventListener("touchstart", () => {
-      audioContext.resume();
-    }, { once: true });
-  }
+function checkMicrophonePermission() {
+  return navigator.permissions.query({ name: "microphone" }).then((permissionStatus) => {
+    console.log("Permesso microfono:", permissionStatus.state);
+    return permissionStatus.state === "granted" || permissionStatus.state === "prompt";
+  }).catch((err) => {
+    console.error("Errore durante il controllo dei permessi:", err);
+    return false;
+  });
 }
 
 function startRecording() {
+  console.log("Tentativo di accesso al microfono...");
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then((stream) => {
       console.log("Accesso al microfono riuscito.");
       audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      fixAudioContext(); // Patch iOS
-
       const input = audioContext.createMediaStreamSource(stream);
-      recorder = new Recorder(input);
+
+      recorder = new Recorder(input); // Assicurati di avere il file "recorder.js"
       recorder.record();
 
       isRecording = true;
@@ -323,12 +335,22 @@ function stopRecording() {
     rec.textContent = "";
 
     recorder.exportWAV((blob) => {
-      audioUrl = URL.createObjectURL(blob); // Salva l'URL del file audio
-      console.log("Registrazione completata. Clicca sul triangolo per riprodurre.");
+      const audioUrl = URL.createObjectURL(blob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+      console.log("Registrazione completata e riprodotta.");
     });
 
     console.log("Registrazione interrotta.");
   }
+}
+
+function resetButton() {
+  isRecording = false;
+  isTriangle = false;
+  rec.classList.remove("triangle");
+  rec.textContent = "rec";
+  console.log("Registrazione cancellata.");
 }
 
 

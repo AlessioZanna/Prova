@@ -294,3 +294,4 @@ function playNextTrack() {
   const selectedItem = musicList.querySelector(`li[data-index="${nextIndex}"]`);
   setSelectedTrack(selectedItem);
 }
+

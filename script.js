@@ -103,7 +103,7 @@ addChatButton.addEventListener("click", () => {
     <div style="display: flex; flex-direction: column;">
       <span>${chatName}</span>
       <span>${artistName}</span>
-      <button onclick="deleteChat(this)" class="canc">X</button> <!-- Bottone per eliminare la chat -->
+      <button onclick="deleteChat(this)" class="canc"><i class="fas fa-times"></i></button> <!-- Bottone per eliminare la chat -->
     </div>
   `;
 
@@ -119,7 +119,8 @@ addChatButton.addEventListener("click", () => {
   };
 
   saveChat(newChat);
-  openChat(chatName);
+  openChat(chatName)
+  ;
 });
 
 
@@ -360,7 +361,8 @@ function resetButton() {
   // Aggiungere il pulsante di cancellazione (X)
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-btn");
-  deleteButton.innerHTML = "&#10006;";
+  deleteButton.innerHTML = '<i class="fas fa-times"></i>'; // Icona "X" di Font Awesome
+/*   deleteButton.innerHTML = "&#10006;"; */
   deleteButton.addEventListener("click", () => {
     const allNoteBlocks = document.querySelectorAll(".note-block");
 
@@ -533,7 +535,7 @@ function loadChats() {
       <div style="display: flex; flex-direction: column;">
         <span>${chat.name}</span>
         <div class="artist-name">${chat.artist}</div> <!-- Mostra l'artista -->
-        <button onclick="deleteChat(this)" class="canc">X</button> <!-- Bottone per eliminare la chat -->
+        <button onclick="deleteChat(this)" class="canc"><i class="fas fa-times"></i></button>
         </div>
         
       `;
@@ -596,181 +598,6 @@ function saveNotes() {
   };
 }
 
-
-/* MENU HOME PAGE ------------------------------------------------------------------------------------------------------------------ */
-
-// Funzione per creare un backup delle chat
-backupButton.addEventListener("click", () => {
-  const transaction = db.transaction(["chats"], "readonly");
-  const objectStore = transaction.objectStore("chats");
-
-  const request = objectStore.getAll();
-
-  request.onsuccess = function (event) {
-    const chats = event.target.result;
-    const jsonBackup = JSON.stringify(chats);
-
-    const blob = new Blob([jsonBackup], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "backup_chats.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-});
-
-// Funzione per caricare un backup da un file JSON
-restoreButton.addEventListener("click", () => {
-  const fileInput = document.createElement("input");
-  fileInput.type = "file";
-  fileInput.accept = ".json";
-  fileInput.click();
-
-  fileInput.addEventListener("change", (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-      const backupData = JSON.parse(e.target.result);
-
-      // Eliminare tutte le chat esistenti prima di caricare il backup
-      deleteAllChats();
-
-      // Aggiungere il backup nel database
-      backupData.forEach(chat => {
-        saveChat(chat);
-      });
-
-      loadChats(); // Ricarica le chat dopo il backup
-    };
-
-    reader.readAsText(file);
-  });
-});
-
-// Funzione per cancellare tutte le chat
-deleteAllButton.addEventListener("click", () => {
-  if (confirm("Sei sicuro di voler cancellare tutte le chat e le note?")) {
-    deleteAllChats();
-    loadChats();
-  }
-});
-
-// Funzione per eliminare tutte le chat
-function deleteAllChats() {
-  const transaction = db.transaction(["chats"], "readwrite");
-  const objectStore = transaction.objectStore("chats");
-  const request = objectStore.clear();
-
-  request.onsuccess = function () {
-    console.log("Tutte le chat sono state cancellate");
-  };
-
-  request.onerror = function (event) {
-    console.log("Errore nell'eliminare tutte le chat:", event);
-  };
-}
-
-// Funzione per aprire il menu e applicare l'overlay
-function openHomeMenu() {
-  document.getElementById("right-page").style.transform = "translateX(0)";
-  document.getElementById("right-page").style.display = "block";
-  document.getElementById("home-overlay").style.display = "block"; // Mostra l'overlay
-  document.getElementById("home-page").classList.add("blur"); // Applica la classe di opacità
-  document.querySelector(".menu-icon").classList.add("hidden"); // Nascondi l'icona del menu
-}
-
-// Funzione per chiudere il menu e rimuovere l'overlay
-function closeHomeMenu() {
-  document.getElementById("right-page").style.transform = "translateX(100%)";
-  document.getElementById("home-overlay").style.display = "none"; // Nascondi l'overlay
-  document.getElementById("home-page").classList.remove("blur"); // Rimuovi la classe di opacità
-  document.querySelector(".menu-icon").classList.remove("hidden"); // Mostra l'icona del menu
-}
-
-function openChatMenu() {
-  document.getElementById("chat-page").style.display = "none";
-  document.getElementById("settings-page").style.display = "flex";
-}
-
-function goBackFromSettings() {
-  document.getElementById("settings-page").style.display = "none";
-  document.getElementById("chat-page").style.display = "flex";
-}
-
-function toggleMenu() {
-  const menu = document.getElementById("menu");
-  const menuIcon = document.getElementById("menu-icon");
-
-  if (menu.style.transform === "translateX(0%)") {
-    menu.style.transform = "translateX(100%)"; // Chiudi il menu
-    menuIcon.style.display = "block"; // Rendi visibile l'icona del menu
-  } else {
-    menu.style.transform = "translateX(0%)"; // Apre il menu
-    menuIcon.style.display = "none"; // Nascondi l'icona del menu
-  }
-}
-
-function closeMenu() {
-  const menu = document.getElementById("menu");
-  const menuIcon = document.getElementById("menu-icon");
-  menu.style.transform = "translateX(100%)"; // Chiudi il menu
-  menuIcon.style.display = "block"; // Rendi visibile l'icona del menu
-}
-
-// Funzione per cambiare i colori dell'app
-function changeAppColors(oldColor, newColor) {
-  // Cambia gli stili inline nel DOM
-  const elements = document.querySelectorAll('*');
-  elements.forEach(element => {
-    const computedStyle = getComputedStyle(element);
-
-    // Controlla e aggiorna colori di sfondo, testo e bordo
-    ['backgroundColor', 'color', 'borderColor'].forEach(property => {
-      if (computedStyle[property] === oldColor) {
-        element.style[property] = newColor;
-      }
-    });
-  });
-
-  // Aggiorna i colori definiti nei file CSS
-  const styleSheets = Array.from(document.styleSheets);
-  styleSheets.forEach(styleSheet => {
-    try {
-      const rules = styleSheet.cssRules || [];
-      Array.from(rules).forEach(rule => {
-        if (rule.style) {
-          ['background-color', 'color', 'border-color'].forEach(property => {
-            if (rule.style[property] === oldColor) {
-              rule.style[property] = newColor;
-            }
-          });
-        }
-      });
-    } catch (error) {
-      console.warn(`Non è stato possibile accedere a ${styleSheet.href}`);
-    }
-  });
-}
-
-// Aggiunge un listener per il click del pulsante
-document.getElementById('changeColorButton1').addEventListener('click', () => {
-  changeAppColors('rgb(236, 64, 79)', 'rgb(0, 123, 255)');
-  changeAppColors('rgb(0, 255, 157)', 'rgb(0, 123, 255)');
-});
-
-// Aggiunge un listener per il click del pulsante
-document.getElementById('changeColorButton2').addEventListener('click', () => {
-  changeAppColors('rgb(236, 64, 79)', 'rgb(0, 255, 157)');
-  changeAppColors('rgb(0, 123, 255)', 'rgb(0, 255, 157)');
-});
-
-// Aggiunge un listener per il click del pulsante
-document.getElementById('changeColorButton3').addEventListener('click', () => {
-  changeAppColors('rgb(0, 123, 255)', 'rgb(236, 64, 79)');
-  changeAppColors('rgb(0, 255, 157)', 'rgb(236, 64, 79)');
-});
 
 /* PAGINA CON TRASCINAMENTO ------------------------------------------------------------------------------------------------------- */
 
@@ -840,168 +667,3 @@ document.addEventListener('touchmove', (e) => {
 });
 document.addEventListener('touchend', endDrag);
 
-
-/* media player */
-
-const audioPlayer = document.getElementById("audio-player");
-const progressBar = document.getElementById("progress-bar");
-const currentTimeDisplay = document.getElementById("current-time");
-
-let isPlaying = false;
-let progressInterval = null;
-
-
-function toggleAudioSelection() {
-  const beatButton = document.getElementById("beat-button");
-  const icon = beatButton.querySelector("i");
-
-  if (icon.classList.contains("fa-plus")) {
-    // Simula il click sull'input file per caricare un audio
-    document.getElementById("file-input").click();
-  } else if (icon.classList.contains("fa-xmark")) {
-    const confirmRemove = confirm("Sei sicuro di voler rimuovere il beat?");
-    if (confirmRemove) {
-      // Rimuovi l'audio caricato
-      resetPlayer();
-      audioPlayer.src = ""; // Rimuove l'audio
-      document.querySelector(".beat-title").textContent = "Scegli il beat";
-      document.querySelector(".progress-bar-container").style.display = "none";
-      icon.classList.remove("fa-xmark");
-      icon.classList.add("fa-plus");
-    }
-  }
-}
-
-
-function loadAudio(event) {
-  const file = event.target.files[0];
-
-  if (!file) {
-    alert("Nessun file selezionato. Riprova.");
-    return;
-  }
-
-  if (file.type.startsWith("audio/")) {
-    try {
-      const fileURL = URL.createObjectURL(file);
-      audioPlayer.src = fileURL;
-      audioPlayer.load();
-
-      // Attiva la barra di progresso e aggiorna il titolo del
-      // Attiva la barra di progresso e aggiorna il titolo del beat
-      document.querySelector(".progress-bar-container").style.display = "block";
-      document.querySelector(".beat-title").textContent = file.name;
-
-      // Cambia l'icona in "x"
-      const icon = document.getElementById("beat-button").querySelector("i");
-      icon.classList.remove("fa-plus");
-      icon.classList.add("fa-xmark");
-
-      resetPlayer();
-    } catch (error) {
-      alert("Si è verificato un errore durante il caricamento del file. Riprova.");
-      resetButtonState();
-    }
-  } else {
-    alert("Il file selezionato non è un audio valido. Per favore carica un file audio.");
-    resetButtonState();
-  }
-}
-
-// Funzione per resettare il pulsante e la UI
-function resetButtonState() {
-  const icon = document.getElementById("beat-button").querySelector("i");
-  icon.classList.remove("fa-xmark");
-  icon.classList.add("fa-plus");
-  document.querySelector(".progress-bar-container").style.display = "none";
-  document.querySelector(".beat-title").textContent = "Scegli il beat";
-}
-
-function resetPlayer() {
-  isPlaying = false;
-  updateProgressBar(0);
-  currentTimeDisplay.textContent = formatTime(0);
-  if (progressInterval) clearInterval(progressInterval);
-}
-
-
-function togglePlayPause() {
-  const playPauseButton = document.querySelector(".controls .control-btn:nth-child(2) i"); // Seleziona l'icona all'interno del bottone
-
-  // Log per vedere se il bottone è stato selezionato correttamente
-  console.log("Bottone selezionato:", playPauseButton);
-
-  if (audioPlayer.src === "") {
-    alert("Per favore seleziona un beat prima di riprodurre!");
-    return;
-  }
-
-  if (isPlaying) {
-    pause();
-    playPauseButton.className = "fa-solid fa-play"; // Imposta l'icona su play
-  } else {
-    play();
-    playPauseButton.className = "fa-solid fa-pause"; // Imposta l'icona su pause
-  }
-}
-
-
-function play() {
-  isPlaying = true;
-  audioPlayer.play();
-  progressInterval = setInterval(updateProgress, 500);
-}
-
-function pause() {
-  isPlaying = false;
-  audioPlayer.pause();
-  clearInterval(progressInterval);
-}
-
-function rewind() {
-  if (audioPlayer.currentTime >= 15) {
-    audioPlayer.currentTime -= 15;
-  } else {
-    audioPlayer.currentTime = 0;
-  }
-  updateProgress();
-}
-
-function forward() {
-  if (audioPlayer.currentTime + 15 <= audioPlayer.duration) {
-    audioPlayer.currentTime += 15;
-  } else {
-    audioPlayer.currentTime = audioPlayer.duration;
-  }
-  updateProgress();
-}
-
-function updateProgress() {
-  const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-  updateProgressBar(progress);
-  currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
-}
-
-function updateProgressBar(progress) {
-  progressBar.style.width = `${progress}%`;
-}
-
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
-}
-
-document.querySelector(".progress-bar-container").addEventListener("click", (event) => {
-  const progressBarContainer = event.currentTarget;
-  const rect = progressBarContainer.getBoundingClientRect();
-  const clickX = event.clientX - rect.left;
-  const width = rect.width;
-  const newTime = (clickX / width) * audioPlayer.duration;
-
-  // Imposta il nuovo tempo nell'audio player
-  audioPlayer.currentTime = newTime;
-
-  // Aggiorna la barra di progresso e il minutaggio
-  updateProgress();
-});

@@ -22,73 +22,47 @@ section {
   border-radius: 10px;
   padding: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: none; /* Nascondi tutte le sezioni */
 }
 
-.card-section input {
-  display: block;
+.section.active {
+  display: block; /* Mostra solo la sezione attiva */
+}
+
+footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: #0b0c10;
+  padding: 1rem;
   width: 100%;
-  margin: 5px 0;
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
 }
 
-button {
+footer button {
   background-color: #66fcf1;
   border: none;
-  padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
+  padding: 0.5rem;
   border-radius: 50px;
   cursor: pointer;
   font-weight: bold;
 }
 
-.team-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 0.5rem;
+footer button:focus {
+  outline: none;
 }
 
 .team-buttons button {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  font-size: 20px;
   background-color: #45a29e;
-  color: white;
-}
-
-.locker-room-section input {
-  width: 100%;
-  margin: 2px 0;
-  padding: 0.3rem;
-  border-radius: 5px;
   border: none;
-}
-
-.player-card, .player-entry {
-  background: #c5c6c7;
-  color: #0b0c10;
   padding: 0.5rem;
-  margin-bottom: 1rem;
-  border-radius: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0.5rem;
 }
 
-.toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #66fcf1;
-  color: #0b0c10;
-  padding: 0.8rem 1.2rem;
-  border-radius: 10px;
-  font-weight: bold;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  z-index: 1000;
-}
-
-.toast.show {
-  opacity: 1;
+button:focus {
+  outline: none;
 }

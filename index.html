@@ -9,7 +9,7 @@
 <body>
   <div class="app">
     <!-- Carta Giocatore -->
-    <section class="card-section">
+    <section class="card-section section" id="card-section">
       <h2>La Mia Carta</h2>
       <div class="player-card" id="my-card">
         <input id="my-name" value="Alessio" disabled />
@@ -26,7 +26,7 @@
     </section>
 
     <!-- Campo -->
-    <section class="field-section">
+    <section class="field-section section" id="field-section">
       <h2>Campo</h2>
       <div class="teams-vertical">
         <div class="team" id="team1">
@@ -53,12 +53,18 @@
     </section>
 
     <!-- Spogliatoio -->
-    <section class="locker-room-section">
+    <section class="locker-room-section section" id="locker-room-section">
       <h2>Spogliatoio</h2>
       <div id="player-list"></div>
       <button onclick="addPlayer()">+ Aggiungi Giocatore</button>
     </section>
   </div>
+
+  <footer class="footer">
+    <button onclick="navigateTo('card-section')">Carta</button>
+    <button onclick="navigateTo('field-section')">Campo</button>
+    <button onclick="navigateTo('locker-room-section')">Spogliatoio</button>
+  </footer>
 
   <div class="toast" id="toast">Salvato!</div>
   <script src="script.js"></script>

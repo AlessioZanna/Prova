@@ -1,710 +1,94 @@
-/* Stili generali */
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #141414;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-  /* Impedisce lo scroll fuori dall'app */
-}
-
-.home-page {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 390px;
-  /* Imposta una larghezza massima */
+  font-family: Arial, sans-serif;
+  background: #0b0c10;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  /* Evita lo scroll all'esterno */
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-  padding: 15px;
-  font-size: 20px;
-  color: #EC404F;
-  /*   border-bottom: 1px solid #333; */
-  border-radius: 15px 15px 0 0;
-  /* overflow: hidden; */
-  /* Impedisce lo scroll fuori dall'app */
   align-items: center;
-  /* Allinea gli elementi verticalmente */
-  height: 50px;
+  padding: 1rem;
 }
 
-.search-bar {
-  padding: 10px;
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 480px;
   width: 100%;
-  /* overflow: hidden; */
-  /* Impedisce lo scroll fuori dall'app */
 }
 
-.search-bar input {
-  width: 90%;
-  padding: 10px;
-  border-radius: 13px;
-  border: none;
-  background-color: #333;
-  color: #ffffff;
-  font-size: 14px;
-  /* overflow: hidden; */
-  /* Impedisce lo scroll fuori dall'app */
+section {
+  background: #1f2833;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.canc {
-  position: absolute;
-  background: none;
+.card-section input {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+  padding: 0.5rem;
+  border-radius: 5px;
   border: none;
-  color: #ec404f;
+}
+
+button {
+  background-color: #66fcf1;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 50px;
+  cursor: pointer;
   font-weight: bold;
-  right: 15px;
-  top: 25px;
 }
 
-.chat-square {
+.team-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+}
+
+.team-buttons button {
   width: 50px;
-  /* Dimensione del quadrato */
   height: 50px;
-  background-color: white;
-  /* Colore bianco */
-  display: inline-block;
-  margin-right: 10px;
-  /* Spazio tra il quadrato e il nome della chat */
-  border-radius: 10px;
-}
-
-.artist-name {
-  font-size: 14px;
-  color: gray;
-  /* Imposta il colore in grigio per l'artista */
-}
-
-.chat-list {
-  flex: 1;
-  overflow-y: auto;
-  /* Rende scrollabile solo la lista di chat */
-  padding: 10px 0;
-  padding-top: 40px;
-  scrollbar-width: none;
-  position: relative;
-  height: 555px;
-}
-
-.chat-list::-webkit-scrollbar {
-  display: none;
-}
-
-.chat-item {
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  position: relative;
-  font-size: 16px;
-  margin: 0;
-  color: #ffffff;
-}
-
-
-
-.span {
-  font-size: 18px;
-  margin: 0;
-  color: #ffffff;
-}
-
-.contact-delete {
-  position: absolute;
-  right: -50px;
-  top: 10px;
-  width: 40px;
-  height: 40px;
-  background-color: #ec404f;
-  color: white;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: right 0.3s;
-  cursor: pointer;
-  font-size: 18px;
-  outline: none;
-  border: none;
-}
-
-.contact.swiped .contact-delete {
-  right: 15px;
-  top: 10%;
-}
-
-
-.add-button {
-  position: absolute;
-  right: 20px;
-  bottom: 40px;
-  background-color: #ec404f;
-  border: none;
-  color: white;
-  font-size: 24px;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-  transition: border-radius 0.2s ease, width 0.1s ease;
-  /* Transizioni per l'effetto */
-}
-
-/* Chat Page Styles */
-.chat-page {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 387px;
-  /* Imposta una larghezza massima */
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  /* Evita lo scroll all'esterno */
-  position: relative;
-  /* Assicurati che la home page sia sopra */
-}
-
-.chat-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.chat-title {
-  color: #EC404F;
-  padding-right: 15px;
-}
-
-.back-button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-  padding-left: 0px;
-  cursor: pointer;
-}
-
-.chat-menu {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-  padding-right: 0px;
-}
-
-.note-container {
-  padding-top: 20px;
-  overflow-y: auto;
-  height: 590px;
-  scrollbar-width: none;
-}
-
-.note-block {
-  margin: 10px 45px;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #EC404E;
-  width: 280px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.note-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 0 0 5px;
-  color: white;
-}
-
-.note-text {
-  font-size: 14px;
-  margin: 0;
-  color: white;
-  white-space: pre-wrap;
-}
-
-/* Stile per il pulsante di trascinamento */
-.drag-handle {
-  margin-left: -54px;
-  justify-content: center;
-  position: absolute;
-  width: 40px;
-  height: 60px;
-  display: grid;
-  place-items: center;
-}
-
-.contai {
-  border-radius: 15%;
-  width: 20px;
-  height: 7px;
-  background-color: white;
-}
-
-/* Stile per il pulsante di rec */
-.rec {
-  right: 0px;
-  justify-content: center;
-  position: absolute;
-  width: 40px;
-  height: 60px;
-  display: grid;
-  place-items: center;
-}
-
-.contai2 {
-  border: 7px solid white;
-  border-radius: 50%;
-  box-shadow: 0px 2px 4px rgba (0, 0, 0, 0.2);
-  width: 8px;
-  height: 8px;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  color: transparent;
-}
-
-.rec.triangle {
-/*   width: 5px;
-  height: 5px;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 15px solid white;
-  border-radius: 0;
-  background-color: transparent;
-  color: transparent;
-  margin-top: 15px;
-  transform: rotateZ(90deg); */
-  width: 0px;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 18px solid transparent;
-  border-bottom: 15px solid #ffffff;
-  transform: rotate(90deg);
-}
-
-/* Posizionamento della X nell'intestazione */
-.note-title-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.delete-btn {
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-size: 15px;
-  cursor: pointer;
-  position: relative;
-  top: -12px;
-  right: -20px;
-}
-
-
-
-
-
-/* -------------------- MENU HOME PAGE -------------------------------------------------------------------------------- */
-
-
-/* Stili per la pagina destra (menu) */
-.right-page {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 190px;
-  width: 70%;
-  height: 100%;
-  background-color: #141414;
-  /* Colore di sfondo del menu */
-  color: white;
-  /* Colore del testo all'interno del menu */
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-  transform: translateX(100%);
-  /* Inizialmente nascosta */
-  transition: transform 0.3s ease;
-  display: none;
-  /* Rende la pagina del menu invisibile all'inizio */
-  pointer-events: auto;
-  /* Permette l'interazione con il menu */
-  border-radius: 25px;
-  z-index: 2;
-}
-
-.header-menu {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding-right: 65px;
-  padding-left: 15px;
-  position: relative;
-  top: 8px;
-}
-
-.close {
-  background: none;
-  border: none;
-  color: white;
-  position: relative;
-  top: 2px;
-  font-size: 25px;
-}
-
-#right-page-content {
-  padding-top: 20px;
-  padding-right: 70px;
-  text-align: -webkit-center;
-}
-
-.home-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-
-.menu-overlay {
-  flex: 1;
-  background-color: rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-}
-
-.menu-content .close-menu {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
-
-.menu-content .menu-items {
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  color: white;
-  font-size: 16px;
-  padding: 20px;
-}
-
-.menu-icon {
-  font-size: 22px;
-  color: white;
-  cursor: pointer;
-  position: relative;
-  top: 3px;
-}
-
-/* Nascondi l'icona del menu quando il menu è aperto */
-.menu-icon.hidden {
-  display: none;
-}
-
-/* Overlay per rendere la home page meno visibile quando il menu è aperto */
-.home-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  /* Sfondo semi-trasparente */
-  z-index: 1;
-  /* Deve essere sotto il menu */
-  display: none;
-  transition: transform 1s ease;
-}
-
-/* Aggiungi opacità alla home page */
-.home-page.blur {
-  opacity: 1;
-  /* Riduce l'opacità della Home Page */
-  pointer-events: none;
-  /* Impedisce interazioni con la home page mentre il menu è aperto */
-  transition: transform 1s ease;
-}
-
-.dragging {
-  opacity: 0.5;
-  /*
-  pointer-events: none;
-  transition: none; */
-}
-
-.contact.dragging {
-  opacity: 0.5;
-  /*
-  background-color: #f0f0f0;
-  cursor: move; */
-}
-
-.calendar,
-.backup-button,
-.restore-button,
-.delete-all-button {
-  font-size: 17px;
-  margin: 0;
-  color: #ffffff;
-  outline: none;
-  border: none;
-  background: none;
-  cursor: pointer;
-  display: block;
-  margin-top: 30px;
-  margin-bottom: 10px;
-  margin-left: -5px;
-  font-weight: bold;
-  /* Imposta il testo in grassetto */
-}
-
-.color {
-  display: flex;
-  position: relative;
-  justify-content: space-evenly;
-  top: 25px;
-}
-
-.buttoncolor1 {
-  height: 21px;
-  width: 20px;
-  border-radius: 50%;
-  background-color: #007BFE;
-  border: none;
-}
-
-.buttoncolor2 {
-  height: 21px;
-  width: 20px;
-  border-radius: 50%;
-  background-color: #00ff9e;
-  border: none;
-}
-
-.buttoncolor3 {
-  height: 21px;
-  width: 20px;
-  border-radius: 50%;
-  background-color: #EC404E;
-  border: none;
-}
-
-
-
-
-.media-player {
-  position: absolute;
-  /* Posizione fissa */
-  bottom: 40px;
-  /* Imposta la distanza dal basso */
-  left: 20px;
-  /* Imposta la distanza dalla sinistra */
-  width: 345px;
-  height: 70px;
-  background-color: #EC404F;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  box-sizing: border-box;
-  z-index: 10;
-  /* Impedisce che venga coperto da altri elementi */
-  /*  transition: border-radius 0.2s ease, width 0.1s ease; */
-  transition: left 0.1s ease, width 0.1s ease, border-radius 0.1s ease;
-  /* Transizioni per l'effetto */
-}
-
-/* Modifica il margine da "bottom" come segue */
-
-
-.beat-selection {
-  margin: 10px;
-  font-size: 25px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: block;
-}
-
-.beat-info {
-  flex-grow: 1;
-  margin-left: 10px;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-
-.beat-title {
-  font-size: 14px;
-  margin: 0;
-  width: 140px;
-  /* Imposta una larghezza massima */
-  overflow: hidden;
-  /* Nasconde il testo in eccesso */
-  white-space: nowrap;
-  /* Impedisce il testo di andare a capo */
-  text-overflow: ellipsis;
-  /* Aggiunge i puntini di sospensione quando il testo è troncato */
-}
-
-
-.beat-time {
-  font-size: 12px;
-  margin: 0;
-  opacity: 0.8;
-}
-
-.controls {
-  display: flex;
-  /* gap: 5px; */
-}
-
-.control-btn {
-  background-color: transparent;
-  border: none;
-  color: white;
   font-size: 20px;
-  cursor: pointer;
-  padding-right: 10px;
-  padding-left: 15px;
-}
-
-.progress-bar-container {
-  position: absolute;
-  bottom: 0px;
-  left: 10px;
-  right: 10px;
-  height: 4px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 2.5px;
-  /* overflow: hidden; */
-  display: none;
-  /* Nasconde la barra finché non si seleziona un beat */
-  cursor: pointer;
-}
-
-.progress-bar {
-  height: 100%;
-  background-color: white;
-  width: 0;
-  transition: width 0.1s;
-  cursor: pointer;
-}
-
-
-/* -------------------- MENU CHAT PAGE -------------------------------------------------------------------------------- */
-
-.settings-page {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  /* overflow: hidden; */
-  /* position:; */
-}
-
-.setting-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 15px;
-  padding-right: 25px;
-}
-
-h2 {
-  color: #ec404f;
-}
-
-.spazio {
-  opacity: 0;
-}
-
-.settings-content {
-  height: 700px;
-  padding-top: 20px;
-}
-
-.white-square {
-  background-color: #ffffff;
-  width: 320px;
-  height: 320px;
-  margin: 20px auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.buttons-container1 {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: space-evenly;
-  margin-top: 30px;
-}
-
-
-.settings-button {
-  background-color: #ec404f;
-  color: #ffffff;
-  font-size: 16px;
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.check {
-  margin-top: 40px;
-}
-
-.custom-checkbox input {
-  display: none;
-}
-
-.custom-checkbox span {
-  background-color: #333;
-  color: #ffffff;
-  font-size: 16px;
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-  width: 95px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}
-
-.custom-checkbox input:checked+span {
-  background-color: #ec404f;
+  background-color: #45a29e;
   color: white;
+}
+
+.locker-room-section input {
+  width: 100%;
+  margin: 2px 0;
+  padding: 0.3rem;
+  border-radius: 5px;
+  border: none;
+}
+
+.player-card, .player-entry {
+  background: #c5c6c7;
+  color: #0b0c10;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #66fcf1;
+  color: #0b0c10;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.toast.show {
+  opacity: 1;
 }

@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Team5</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Nome App">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+
 </head>
+
 <body>
   <div class="container">
 
@@ -14,8 +24,8 @@
     <section id="field" class="section active">
       <div class="Team5">Team5</div>
       <button class="clear-teams" onclick="clearTeams()"><i class="fa-solid fa-trash"></i></button>
-<div id="topTeamOverall" class="overall-display top-right">0</div>
-<div id="bottomTeamOverall" class="overall-display bottom-right">0</div>
+      <div id="topTeamOverall" class="overall-display top-right">0</div>
+      <div id="bottomTeamOverall" class="overall-display bottom-right">0</div>
 
       <div class="soccer-field">
         <div class="center-circle"></div>
@@ -98,4 +108,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
